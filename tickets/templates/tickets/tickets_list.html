@@ -11,8 +11,7 @@
     <h2>{{ ticket.title }}</h2>
     <p>{{ ticket.get_ticket_type_display }}</p>
     <p>{{ ticket.get_ticket_status_display }}</p>
-    <p>{{ ticket.ticket_author }}</p>
-    <p>{{ ticket.description }}</p>
+    <a href="{% url 'ticket_detail' pk=ticket.pk%}">show details</a>
     {% endfor %}
 </body>
 </html>
