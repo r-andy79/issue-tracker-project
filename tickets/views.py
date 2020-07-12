@@ -44,6 +44,11 @@ def edit_ticket(request, pk):
     }
     return render(request, "tickets/edit_ticket.html", context)
 
+def delete_ticket(request, pk):
+    ticket = get_object_or_404(Ticket, pk=pk)
+    ticket.delete()
+    return redirect('tickets_list')
+
 def add_comment_to_ticket(request, pk):
     ticket = get_object_or_404(Ticket, pk=pk)
     if request.method == "POST":
