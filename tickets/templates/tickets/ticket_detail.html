@@ -10,5 +10,10 @@
     <p>{{ ticket.ticket_type }}</p>
     <p>{{ ticket.created_date }}</p>
     <a href="{% url 'tickets_list' %}">back to main page</a>
+    {% for comment in ticket.comments.all %}
+    <p><span>{{ comment.comment_author }}: </span>{{ comment }}</p>
+    {% empty %}
+    <p>No comments here yet</p>
+    {% endfor %}
 </body>
 </html>

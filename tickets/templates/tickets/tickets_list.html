@@ -12,6 +12,8 @@
     <p>{{ ticket.get_ticket_type_display }}</p>
     <p>{{ ticket.get_ticket_status_display }}</p>
     <a href="{% url 'ticket_detail' pk=ticket.pk%}">show details</a>
+    {% empty %}
+    <h2>No tickets at the moment</h2>
     {% endfor %}
 </body>
 </html>
