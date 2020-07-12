@@ -49,7 +49,9 @@ def add_comment_to_ticket(request, pk):
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
-            form.save()
+            comment = form.save(commit=False)
+            comment.ticket = ticket
+            comment.save()
             return redirect('tickets_list')
     else:
         form = CommentForm()
