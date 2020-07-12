@@ -15,5 +15,8 @@
     {% empty %}
     <h2>No tickets at the moment</h2>
     {% endfor %}
+    <div>
+    <a href="{% url 'ticket_new' %}">create new ticket</a>
+</div>
 </body>
 </html>
