@@ -13,8 +13,9 @@
     <a href="{% url 'tickets_list' %}">back to main page</a>
     <a href="{% url 'edit_ticket' pk=ticket.pk %}"><button>Edit</button></a>
     <a href="{% url 'add_comment' pk=ticket.pk %}"><button>Add comment</button></a>
+    <h2>Comments</h2>
     {% for comment in ticket.comments.all %}
-    <p><span>{{ comment.comment_author }}: </span>{{ comment }}</p>
+    <p><span>{{ comment.comment_author }}: </span>{{ comment.comment_text }}</p>
     {% empty %}
     <p>No comments here yet</p>
     {% endfor %}

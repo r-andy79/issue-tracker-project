@@ -52,7 +52,7 @@ def add_comment_to_ticket(request, pk):
             comment = form.save(commit=False)
             comment.ticket = ticket
             comment.save()
-            return redirect('tickets_list')
+            return redirect('ticket_detail', pk=ticket.pk)
     else:
         form = CommentForm()
     context = {
