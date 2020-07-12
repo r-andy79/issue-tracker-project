@@ -7,5 +7,12 @@
 </head>
 <body>
     <h1>Current issues</h1>
+    {% for ticket in tickets %}
+    <h2>{{ ticket.title }}</h2>
+    <p>{{ ticket.get_ticket_type_display }}</p>
+    <p>{{ ticket.get_ticket_status_display }}</p>
+    <p>{{ ticket.ticket_author }}</p>
+    <p>{{ ticket.description }}</p>
+    {% endfor %}
 </body>
 </html>

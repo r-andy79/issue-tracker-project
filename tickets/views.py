@@ -1,7 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from .models import Ticket
 
-# Create your views here.
+
 def tickets_list(request):
-    return render(request, "tickets/tickets_list.html")
+    tickets = Ticket.objects.all()
+    context = {
+        'tickets': tickets
+    }
+    return render(request, "tickets/tickets_list.html", context)
 
