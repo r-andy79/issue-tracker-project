@@ -2,6 +2,6 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 # Create your views here.
-def index(request):
-    return HttpResponse("<h1>Issue tracker</h1>")
+def tickets_list(request):
+    return render(request, "tickets/tickets_list.html")
 
