@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Ticket, Comment
-from .forms import TicketForm
+from .forms import TicketForm, CommentForm
 
 
 def tickets_list(request):
@@ -44,4 +44,17 @@ def edit_ticket(request, pk):
     }
     return render(request, "tickets/edit_ticket.html", context)
 
+def add_comment_to_ticket(request, pk):
+    ticket = get_object_or_404(Ticket, pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('tickets_list')
+    else:
+        form = CommentForm()
+    context = {
+        'form': form
+    }
+    return render(request, "tickets/add_comment_to_ticket.html", context)
 

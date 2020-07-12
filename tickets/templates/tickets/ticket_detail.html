@@ -11,7 +11,8 @@
     <p>{{ ticket.created_date }}</p>
     <p>{{ ticket.description }}</p>
     <a href="{% url 'tickets_list' %}">back to main page</a>
-    <a href="{% url 'edit_ticket' pk=ticket.pk %}">edit</a>
+    <a href="{% url 'edit_ticket' pk=ticket.pk %}"><button>Edit</button></a>
+    <a href="{% url 'add_comment' pk=ticket.pk %}"><button>Add comment</button></a>
     {% for comment in ticket.comments.all %}
     <p><span>{{ comment.comment_author }}: </span>{{ comment }}</p>
     {% empty %}
