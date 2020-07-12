@@ -21,3 +21,11 @@ class Ticket(models.Model):
 
     def __str__(self):
         return self.title
+
+class Comment(models.Model):
+    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name='comments')
+    comment_author = models.CharField(max_length=60)
+    comment_text = models.TextField()
+
+    def __str__(self):
+        return self.comment_text
