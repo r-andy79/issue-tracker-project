@@ -22,11 +22,26 @@ def ticket_new(request):
     if request.method == "POST":
         form = TicketForm(request.POST)
         if form.is_valid():
-            ticket = form.save(commit=False)
-            ticket.save()
-            return redirect('ticket_detail', pk=ticket.pk)
+            form.save()
+            return redirect('tickets_list')
     else:
         form = TicketForm()
-    return render(request, "tickets/ticket_new.html", {'form': form})
+    context = {
+        'form': form
+    }
+    return render(request, "tickets/ticket_new.html", context)
+
+def edit_ticket(request, pk):
+    ticket = get_object_or_404(Ticket, pk=pk)
+    if request.method == "POST":
+        form = TicketForm(request.POST, instance=ticket)
+        if form.is_valid():
+            form.save()
+            return redirect('tickets_list')
+    form = TicketForm(instance=ticket)
+    context = {
+        'form': form
+    }
+    return render(request, "tickets/edit_ticket.html", context)
 
 
