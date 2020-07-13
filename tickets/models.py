@@ -3,7 +3,7 @@ from django.utils import timezone
 
 class Ticket(models.Model):
     title = models.CharField('Ticket title', max_length=120)
-    ticket_author = models.CharField(max_length=60)
+    ticket_author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     description = models.TextField(blank=True)
     TICKET_TYPES = [
         ('bug', 'Bug'),
