@@ -29,3 +29,14 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment_text
+
+class Vote(models.Model):
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.user) + ":" + str(self.ticket) + str(self.date)
+
+    class Meta:
+        unique_together = ("user", "ticket")
