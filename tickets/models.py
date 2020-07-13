@@ -24,7 +24,7 @@ class Ticket(models.Model):
 
 class Comment(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name='comments')
-    comment_author = models.CharField(max_length=60)
+    comment_author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     comment_text = models.TextField()
 
     def __str__(self):
