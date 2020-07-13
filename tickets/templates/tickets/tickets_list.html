@@ -6,14 +6,23 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Current issues</h1>
-    {% for ticket in tickets %}
-    <h2>{{ ticket.title }}</h2>
-    <p>{{ ticket.get_ticket_type_display }}</p>
-    <p>{{ ticket.get_ticket_status_display }}</p>
-    <a href="{% url 'ticket_detail' pk=ticket.pk%}">show details</a>
+    <h2>bugs</h2>
+    {% for bug in bugs %}
+    <h2>{{ bug.title }}</h2>
+    <p>{{ bug.get_ticket_type_display }}</p>
+    <p>{{ bug.get_ticket_status_display }}</p>
+    <a href="{% url 'ticket_detail' pk=bug.pk%}">show details</a>
     {% empty %}
-    <h2>No tickets at the moment</h2>
+    <h2>No bugs raised at the moment</h2>
+    {% endfor %}
+    <h2>features</h2>
+    {% for feature in features %}
+    <h2>{{ feature.title }}</h2>
+    <p>{{ feature.get_ticket_type_display }}</p>
+    <p>{{ feature.get_ticket_status_display }}</p>
+    <a href="{% url 'ticket_detail' pk=feature.pk%}">show details</a>
+    {% empty %}
+    <h2>No features to work on at the moment</h2>
     {% endfor %}
     <div>
     <a href="{% url 'ticket_new' %}">create new ticket</a>

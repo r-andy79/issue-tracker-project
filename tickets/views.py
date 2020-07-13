@@ -6,8 +6,16 @@ from .forms import TicketForm, CommentForm
 
 def tickets_list(request):
     tickets = Ticket.objects.all()
+    bugs = []
+    features = []
+    for ticket in tickets:
+        if ticket.ticket_type == "bug":
+            bugs.append(ticket)
+        else:
+            features.append(ticket)
     context = {
-        'tickets': tickets
+        'bugs': bugs,
+        'features': features
     }
     return render(request, "tickets/tickets_list.html", context)
 
