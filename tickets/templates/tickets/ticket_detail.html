@@ -11,7 +11,7 @@
     <p>{{ ticket.ticket_type }}</p>
     <p>{{ ticket.created_date }}</p>
     <p>{{ ticket.description }}</p>
-    <a href="{% url 'tickets_list' %}">back to main page</a>
+    <a href="{% url 'tickets_list' %}"><button>Back to main page</button></a>
     <a href="{% url 'edit_ticket' pk=ticket.pk %}"><button>Edit</button></a>
     <a href="{% url 'delete_ticket' pk=ticket.pk %}"><button>Delete</button></a>
     <a href="{% url 'add_comment' pk=ticket.pk %}"><button>Add comment</button></a>

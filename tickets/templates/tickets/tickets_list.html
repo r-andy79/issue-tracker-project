@@ -6,7 +6,7 @@
     <h2>{{ bug.title }}</h2>
     <p>{{ bug.get_ticket_type_display }}</p>
     <p>{{ bug.get_ticket_status_display }}</p>
-    <a href="{% url 'ticket_detail' pk=bug.pk%}">show details</a>
+    <a href="{% url 'ticket_detail' pk=bug.pk%}"><button>show details</button></a>
     {% empty %}
     <h2>No bugs raised at the moment</h2>
     {% endfor %}
@@ -15,7 +15,7 @@
     <h2>{{ feature.title }}</h2>
     <p>{{ feature.get_ticket_type_display }}</p>
     <p>{{ feature.get_ticket_status_display }}</p>
-    <a href="{% url 'ticket_detail' pk=feature.pk%}">show details</a>
+    <a href="{% url 'ticket_detail' pk=feature.pk%}"><button>show details</button></a>
     {% empty %}
     <h2>No features to work on at the moment</h2>
     {% endfor %}
