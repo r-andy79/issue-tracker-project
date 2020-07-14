@@ -13,8 +13,8 @@ def tickets_list(request):
             bugs.append(ticket)
         else:
             features.append(ticket)
-    bugs_count = Ticket.objects.filter(ticket_type='bug').count()
-    features_count = Ticket.objects.filter(ticket_type='feature').count()
+    bugs_count = len(bugs)
+    features_count = len(features)
     context = {
         'bugs': bugs,
         'features': features,
