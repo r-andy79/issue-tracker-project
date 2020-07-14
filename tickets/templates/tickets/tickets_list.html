@@ -1,7 +1,7 @@
 {% extends 'tickets/base.html' %}
 {% block title %}Tickets{% endblock title %}
 {% block content %}
-    <h2>bugs</h2>
+    <h2>bugs - {{ bugs_count }}</h2>
     {% for bug in bugs %}
     <h2>{{ bug.title }}</h2>
     <p>{{ bug.get_ticket_type_display }}</p>
@@ -10,7 +10,7 @@
     {% empty %}
     <h2>No bugs raised at the moment</h2>
     {% endfor %}
-    <h2>features</h2>
+    <h2>features - {{ features_count }}</h2>
     {% for feature in features %}
     <h2>{{ feature.title }}</h2>
     <p>{{ feature.get_ticket_type_display }}</p>

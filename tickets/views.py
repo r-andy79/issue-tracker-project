@@ -13,9 +13,13 @@ def tickets_list(request):
             bugs.append(ticket)
         else:
             features.append(ticket)
+    bugs_count = Ticket.objects.filter(ticket_type='bug').count()
+    features_count = Ticket.objects.filter(ticket_type='feature').count()
     context = {
         'bugs': bugs,
-        'features': features
+        'features': features,
+        'bugs_count': bugs_count,
+        'features_count': features_count
     }
     return render(request, "tickets/tickets_list.html", context)
 
