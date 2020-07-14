@@ -1,11 +1,24 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
+from django.core.paginator import Paginator
 from .models import Ticket, Comment
 from .forms import TicketForm, CommentForm
 
 
 def tickets_list(request):
-    tickets = Ticket.objects.all()
+    tickets_list = Ticket.objects.all()
+    paginator = Paginator(tickets_list, 10)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except:
+        page = 1
+
+    try:
+        tickets = paginator.page(page)
+    except(EmptyPage, InvalidPage):
+        tickets = paginator.page(paginator.num_pages)
+
     bugs = []
     features = []
     for ticket in tickets:
@@ -16,6 +29,8 @@ def tickets_list(request):
     bugs_count = len(bugs)
     features_count = len(features)
     context = {
+        'tickets_list': tickets_list,
+        'tickets': tickets,
         'bugs': bugs,
         'features': features,
         'bugs_count': bugs_count,

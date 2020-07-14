@@ -1,6 +1,36 @@
 {% extends 'tickets/base.html' %}
 {% block title %}Tickets{% endblock title %}
 {% block content %}
+<div class="container">
+    <div class="row">
+        {% for ticket in tickets.object_list %}
+        <div>
+        <h2>{{ ticket.title }}</h2>
+        <p>{{ ticket.get_ticket_status_display}}</p>
+        <p>{{ ticket.get_ticket_type_display }}</p>
+        <a href="{% url 'ticket_detail' pk=ticket.pk%}"><button>show details</button></a>
+    </div>
+        {% empty %}
+        <p>no tickets</p>
+        {% endfor %}
+        <div class="pagination">
+            <ul>
+                {% if tickets.has_previous %}
+                <li><a href="?page={{ tickets.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                {% for pg in tickets.paginator.page_range %}
+                {% if tickets.number == pg %}
+                <li class="active"><a href="?page={{ pg }}">{{ pg }}</a>></a></li>
+                {% else %}
+                <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+                {% endif %}
+                {% endfor %}
+                {% if tickets.has_next %}
+                <li><a href="?page={{ tickets.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <!-- <div>
     <h2>bugs - {{ bugs_count }}</h2>
     {% for bug in bugs %}
     <h2>{{ bug.title }}</h2>
@@ -10,6 +40,8 @@
     {% empty %}
     <h2>No bugs raised at the moment</h2>
     {% endfor %}
+</div> -->
+        <!-- <div>
     <h2>features - {{ features_count }}</h2>
     {% for feature in features %}
     <h2>{{ feature.title }}</h2>
@@ -19,7 +51,9 @@
     {% empty %}
     <h2>No features to work on at the moment</h2>
     {% endfor %}
-    <div>
+    <div> -->
+    </div>
     <a href="{% url 'ticket_new' %}">create new ticket</a>
+</div>
 </div>
 {% endblock %}
