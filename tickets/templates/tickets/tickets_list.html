@@ -4,12 +4,27 @@
 <div class="container">
     <div class="row">
         {% for ticket in tickets.object_list %}
+        {% if ticket.ticket_type == 'bug' %}
+        <div>
+        <h2>{{ ticket.title }}</h2>
+        <p>{{ ticket.get_ticket_status_display}}</p>
+        <p>{{ ticket.get_ticket_type_display }}</p>
+        <a href="{% url 'ticket_detail' pk=ticket.pk%}"><button>show details</button></a>
+        {% endif %}
+        {% empty %}
+        <p>no tickets</p>
+        {% endfor %}
+    </div>
+    <div class="row">
+        {% for ticket in tickets.object_list %}
+        {% if ticket.ticket_type == 'feature' %}
         <div>
         <h2>{{ ticket.title }}</h2>
         <p>{{ ticket.get_ticket_status_display}}</p>
         <p>{{ ticket.get_ticket_type_display }}</p>
         <a href="{% url 'ticket_detail' pk=ticket.pk%}"><button>show details</button></a>
     </div>
+        {% endif %}
         {% empty %}
         <p>no tickets</p>
         {% endfor %}
