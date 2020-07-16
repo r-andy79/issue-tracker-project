@@ -5,6 +5,7 @@
     <div class="row">
         {% for ticket in tickets.object_list %}
         {% if ticket.ticket_type == 'bug' %}
+<<<<<<< HEAD
         <div>
             <h2>{{ ticket.title }}</h2>
             <p>{{ ticket.get_ticket_status_display}}</p>
@@ -45,6 +46,47 @@
                     {% endif %}
                 </ul>
             </div>
+=======
+        <div>
+        <h2>{{ ticket.title }}</h2>
+        <p>{{ ticket.get_ticket_status_display}}</p>
+        <p>{{ ticket.get_ticket_type_display }}</p>
+        <a href="{% url 'ticket_detail' pk=ticket.pk%}"><button>show details</button></a>
+        {% endif %}
+        {% empty %}
+        <p>no tickets</p>
+        {% endfor %}
+    </div>
+    <div class="row">
+        {% for ticket in tickets.object_list %}
+        {% if ticket.ticket_type == 'feature' %}
+        <div>
+        <h2>{{ ticket.title }}</h2>
+        <p>{{ ticket.get_ticket_status_display}}</p>
+        <p>{{ ticket.get_ticket_type_display }}</p>
+        <a href="{% url 'ticket_detail' pk=ticket.pk%}"><button>show details</button></a>
+    </div>
+        {% endif %}
+        {% empty %}
+        <p>no tickets</p>
+        {% endfor %}
+        <div class="pagination">
+            <ul>
+                {% if tickets.has_previous %}
+                <li><a href="?page={{ tickets.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                {% for pg in tickets.paginator.page_range %}
+                {% if tickets.number == pg %}
+                <li class="active"><a href="?page={{ pg }}">{{ pg }}</a>></a></li>
+                {% else %}
+                <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+                {% endif %}
+                {% endfor %}
+                {% if tickets.has_next %}
+                <li><a href="?page={{ tickets.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+>>>>>>> cd18947eb511d54d45f165ff64f326d18d6c3d42
         </div>
         <a href="{% url 'ticket_new' %}">create new ticket</a>
     </div>
