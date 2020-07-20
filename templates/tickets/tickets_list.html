@@ -29,6 +29,7 @@
         {% empty %}
         <p>no tickets</p>
         {% endfor %}
+        <div class="row">
         <div class="pagination">
             <ul>
                 {% if tickets.has_previous %}
@@ -46,6 +47,7 @@
                 {% endif %}
             </ul>
         </div>
+    </div>
         <a href="{% url 'ticket_new' %}">create new ticket</a>
     </div>
 </div>
