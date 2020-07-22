@@ -8,6 +8,10 @@ body {
     font-family: 'Lato';
 }
 
+.test {
+    border: 1px solid black;
+}
+
 /* from Bulma */
 .icon {
     align-items: center;

@@ -11,9 +11,9 @@
 {% block content %}
 <div class="container">
     <div class="row">
+        <div class="col-lg-6 col-sm-12 test">
         {% for ticket in tickets.object_list %}
         {% if ticket.ticket_type == 'bug' %}
-        <div>
         <h2>{{ ticket.title }}</h2>
         <p>{{ ticket.get_ticket_status_display}}</p>
         <p>{{ ticket.get_ticket_type_display }}</p>
@@ -23,19 +23,18 @@
         <p>no tickets</p>
         {% endfor %}
     </div>
-    <div class="row">
+    <div class="col-lg-6 col-md-12 test">
         {% for ticket in tickets.object_list %}
         {% if ticket.ticket_type == 'feature' %}
-        <div>
         <h2>{{ ticket.title }}</h2>
         <p>{{ ticket.get_ticket_status_display}}</p>
         <p>{{ ticket.get_ticket_type_display }}</p>
         <a href="{% url 'ticket_detail' pk=ticket.pk%}"><button>show details</button></a>
-    </div>
         {% endif %}
         {% empty %}
         <p>no tickets</p>
         {% endfor %}
+    </div>
         <div class="row">
         <div class="pagination">
             <ul>
