@@ -12,7 +12,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-6 col-sm-12 test">
-        {% for ticket in tickets.object_list %}
+        {% for ticket in tickets %}
         {% if ticket.ticket_type == 'bug' %}
         <h2>{{ ticket.title }}</h2>
         <p>{{ ticket.get_ticket_status_display}}</p>
@@ -24,7 +24,7 @@
         {% endfor %}
     </div>
     <div class="col-lg-6 col-md-12 test">
-        {% for ticket in tickets.object_list %}
+        {% for ticket in tickets %}
         {% if ticket.ticket_type == 'feature' %}
         <h2>{{ ticket.title }}</h2>
         <p>{{ ticket.get_ticket_status_display}}</p>
@@ -55,6 +55,5 @@
         </div>
     </div>
         <a href="{% url 'ticket_new' %}">create new ticket</a>
-    </div>
 </div>
 {% endblock %}

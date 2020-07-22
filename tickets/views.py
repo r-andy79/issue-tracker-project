@@ -1,4 +1,6 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect, reverse, get_object_or_404, redirect
+from django.contrib import messages
+from django.db.models import Q
 from django.utils import timezone
 from django.core.paginator import Paginator
 from .models import Ticket, Comment, Vote
@@ -6,18 +8,19 @@ from .forms import TicketForm, CommentForm
 
 
 def tickets_list(request):
-    tickets_list = Ticket.objects.all()
-    paginator = Paginator(tickets_list, 10)
+    tickets = Ticket.objects.all()
+    query = None
 
-    try:
-        page = int(request.GET.get('page', '1'))
-    except:
-        page = 1
-
-    try:
-        tickets = paginator.page(page)
-    except(EmptyPage, InvalidPage):
-        tickets = paginator.page(paginator.num_pages)
+    if request.GET:
+        if 'q' in request.GET:
+            query = request.GET['q']
+            if not query:
+                messages.error(request, "You didn't enter any search criteria!")
+                return redirect(reverse('tickets_list'))
+            
+            queries = Q(title__icontains=query) | Q(description__icontains=query)
+            tickets = tickets.filter(queries)
+            print(tickets)
 
     bugs = []
     features = []
@@ -29,7 +32,8 @@ def tickets_list(request):
     bugs_count = len(bugs)
     features_count = len(features)
     context = {
-        'tickets_list': tickets_list,
+        'tickets': tickets,
+        'search_term': query,
         'tickets': tickets,
         'bugs': bugs,
         'features': features,
