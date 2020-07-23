@@ -8,9 +8,17 @@ body {
     font-family: 'Lato';
 }
 
+/* ---------------- */
+
+/* .ticket-container {
+    border: 1px solid red;
+} */
+
 .test {
     border: 1px solid black;
 }
+
+/* ---------------- */
 
 /* from Bulma */
 .icon {

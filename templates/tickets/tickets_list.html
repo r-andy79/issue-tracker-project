@@ -10,8 +10,44 @@
 {% endblock %}
 {% block content %}
 <div class="container">
-    <div class="row">
-        <div class="col-lg-6 col-sm-12 test">
+    <div class="row mb-2">
+        {% for ticket in tickets %}
+        {% if ticket.ticket_type == 'bug' %}
+        <div class="col-md-6">
+            <div class="row no-gutters border rounded overflow-hiddem flex-md-row mb-4 shadow-sm h-md-250 position-relative">                
+                <div class="col p-4 d-flex flex-column position-static">
+                    <h2>{{ ticket.title }}</h2>
+                    <p>{{ ticket.get_ticket_status_display}}</p>
+                    <p>{{ ticket.get_ticket_type_display }}</p>
+                    <a href="{% url 'ticket_detail' pk=ticket.pk%}"><button class="btn btn-info">Show details</button></a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% empty %}
+        <p>no tickets</p>
+        {% endfor %}
+        {% for ticket in tickets %}
+        {% if ticket.ticket_type == 'feature' %}
+        <div class="col-md-6">
+            <div class="row no-gutters border rounded overflow-hiddem flex-md-row mb-4 shadow-sm h-md-250 position-relative">                
+                <div class="col p-4 d-flex flex-column position-static">
+                    <h2>{{ ticket.title }}</h2>
+                    <p>{{ ticket.get_ticket_status_display}}</p>
+                    <p>{{ ticket.get_ticket_type_display }}</p>
+                    <a href="{% url 'ticket_detail' pk=ticket.pk%}"><button class="btn btn-info">Show details</button></a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% empty %}
+        <p>no tickets</p>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- <div class="container">
+        <div class="col-lg-6 col-sm-12 test p-3">
         {% for ticket in tickets %}
         {% if ticket.ticket_type == 'bug' %}
         <h2>{{ ticket.title }}</h2>
@@ -35,25 +71,5 @@
         <p>no tickets</p>
         {% endfor %}
     </div>
-        <div class="row">
-        <div class="pagination">
-            <ul>
-                {% if tickets.has_previous %}
-                <li><a href="?page={{ tickets.previous_page_number }}">Previous</a></li>
-                {% endif %}
-                {% for pg in tickets.paginator.page_range %}
-                {% if tickets.number == pg %}
-                <li class="active"><a href="?page={{ pg }}">{{ pg }}</a>></a></li>
-                {% else %}
-                <li><a href="?page={{ pg }}">{{ pg }}</a></li>
-                {% endif %}
-                {% endfor %}
-                {% if tickets.has_next %}
-                <li><a href="?page={{ tickets.next_page_number }}">Next</a></li>
-                {% endif %}
-            </ul>
-        </div>
-    </div>
-        <a href="{% url 'ticket_new' %}">create new ticket</a>
-</div>
+</div> -->
 {% endblock %}
