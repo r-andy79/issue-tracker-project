@@ -15,11 +15,15 @@
         {% if ticket.ticket_type == 'bug' %}
         <div class="col-md-6">
             <div class="row no-gutters border rounded overflow-hiddem flex-md-row mb-4 shadow-sm h-md-250 position-relative">                
-                <div class="col p-4 d-flex flex-column position-static">
-                    <h2>{{ ticket.title }}</h2>
-                    <p>{{ ticket.get_ticket_status_display}}</p>
-                    <p>{{ ticket.get_ticket_type_display }}</p>
-                    <a href="{% url 'ticket_detail' pk=ticket.pk%}"><button class="btn btn-info">Show details</button></a>
+                <div class="col p-3 d-flex flex-column position-static">
+                    <p class="small mb-2">Ticket type: <strong>{{ ticket.get_ticket_type_display }}</strong> | Ticket status: <strong>{{ ticket.get_ticket_status_display}}</strong></p>
+                    <h3>{{ ticket.title }}</h3>
+                    <p class="small">Description: {{ ticket.description }}</p>
+                    <div class="d-flex flex-row align-items-baseline">
+                    <a class="mr-2" href="{% url 'ticket_detail' pk=ticket.pk%}"><button class="btn btn-info">Show details</button></a>
+                    <a class="mr-2" href="#"><button class="btn btn-danger">I have this too!</button></a>
+                    <p class="small mb-0">Votes: 25</p>
+                </div>
                 </div>
             </div>
         </div>
