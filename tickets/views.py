@@ -47,8 +47,11 @@ def tickets_list(request):
 
 def ticket_detail(request, pk):
     ticket = get_object_or_404(Ticket, pk=pk)
+    votes = Vote.objects.filter(ticket_id=pk)
+    print(votes)
     context = {
-        'ticket': ticket
+        'ticket': ticket,
+        'votes': votes,
     }
     return render(request, "tickets/ticket_detail.html", context)
 
