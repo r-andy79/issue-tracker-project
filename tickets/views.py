@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.core.paginator import Paginator
 from .models import Ticket, Comment, Vote
 from .forms import TicketForm, CommentForm
+from crispy_forms.helper import FormHelper
 
 
 def tickets_list(request):
