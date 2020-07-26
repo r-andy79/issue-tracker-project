@@ -95,4 +95,3 @@ def add_comment_to_ticket(request, pk):
         'form': form
     }
     return render(request, "tickets/add_comment_to_ticket.html", context)
-

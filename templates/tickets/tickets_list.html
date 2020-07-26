@@ -18,7 +18,7 @@
                 <div class="col p-4 d-flex flex-column position-static">
                     <h3>{{ ticket.title }}</h3>
                     <p class="small mb-2">Ticket type: <strong>{{ ticket.get_ticket_type_display }}</strong> | Ticket status: <strong>{{ ticket.get_ticket_status_display}}</strong> | Date created: <strong>{{ ticket.created_date }}</strong></p>
-                    <p class="small">Description: {{ ticket.description|truncatewords:10 }}</p>
+                    <p class="small">Description: {{ ticket.description|truncatewords:8 }}</p>
                     <div class="d-flex flex-row align-items-baseline">
                     <a class="mr-2" href="{% url 'ticket_detail' pk=ticket.pk%}"><button class="btn btn-sm btn-info"><i class="far fa-file-alt pr-2"></i>Show details</button></a>
                     <a class="mr-2" href="#"><button class="btn btn-sm btn-danger"><i class="fas fa-vote-yea pr-2"></i>I have this too!</button></a>
