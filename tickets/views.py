@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404, redirect
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.db.models import Q
+from django.db import IntegrityError
 from django.utils import timezone
 from django.core.paginator import Paginator
 from .models import Ticket, Comment, Vote
@@ -96,3 +98,16 @@ def add_comment_to_ticket(request, pk):
         'form': form
     }
     return render(request, "tickets/add_comment_to_ticket.html", context)
+
+def ticket_vote(request, ticket_id, user_id):
+    user = User.objects.get(id=user_id)
+    ticket = Ticket.objects.get(id=ticket_id)
+    try:
+        vote = Vote(user=user, ticket=ticket, date=timezone.now())
+        vote.save()
+        print('your vote has been added')
+    except IntegrityError as e:
+        print('you can\'t vote twice')
+    except:
+        print('something went wrong')
+    return redirect('ticket_detail', pk=ticket.pk)
