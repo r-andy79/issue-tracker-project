@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404, redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.db import IntegrityError
@@ -46,6 +47,8 @@ def tickets_list(request):
     return render(request, "tickets/tickets_list.html", context)
 
 def ticket_detail(request, pk):
+    print(request.user.is_authenticated)
+    # print(request.user.email)
     ticket = get_object_or_404(Ticket, pk=pk)
     votes = Vote.objects.filter(ticket_id=pk)
     print(votes)
@@ -55,6 +58,7 @@ def ticket_detail(request, pk):
     }
     return render(request, "tickets/ticket_detail.html", context)
 
+@login_required(login_url='accounts/login')
 def ticket_new(request):
     if request.method == "POST":
         form = TicketForm(request.POST)
@@ -74,7 +78,7 @@ def edit_ticket(request, pk):
         form = TicketForm(request.POST, instance=ticket)
         if form.is_valid():
             form.save()
-            return redirect('tickets_list')
+            return redirect('ticket_detail', pk)
     form = TicketForm(instance=ticket)
     context = {
         'form': form

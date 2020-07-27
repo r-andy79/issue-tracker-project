@@ -87,3 +87,9 @@ body {
         padding-top: 164px;
     }
 }
+
+@media (min-width: 400px) {
+    .header-container {
+        padding-top: 128px;
+    }  
+}
