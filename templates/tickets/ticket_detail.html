@@ -27,8 +27,11 @@
                     <a href="{% url 'edit_ticket' pk=ticket.pk %}"><button class="btn btn-sm btn-success ml-1">Edit</button></a>
                     <a href="{% url 'delete_ticket' pk=ticket.pk %}"><button class="btn btn-sm btn-danger ml-1">Delete</button></a>
                     <a href="{% url 'add_comment' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Add comment</button></a>
+                    {% if user.id == null %}
+                    <a href="#"><button class="btn btn-sm btn-warning ml-1" disabled>Vote</button></a>
+                    {% elif user.id != null %}
                     <a href="{% url 'ticket_vote' ticket_id=ticket.pk user_id=user.id %}"><button class="btn btn-sm btn-warning ml-1">Vote</button></a>
-                    
+                    {% endif %}
                 </div>
             </div>
         </div>

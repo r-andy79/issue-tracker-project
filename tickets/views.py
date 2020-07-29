@@ -47,11 +47,13 @@ def tickets_list(request):
     return render(request, "tickets/tickets_list.html", context)
 
 def ticket_detail(request, pk):
-    print(request.user.is_authenticated)
-    # print(request.user.email)
+    if request.user.is_authenticated:
+        print('zalogowany')
+    else:
+        print('niezalogowany')
+
     ticket = get_object_or_404(Ticket, pk=pk)
     votes = Vote.objects.filter(ticket_id=pk)
-    print(votes)
     context = {
         'ticket': ticket,
         'votes': votes,
@@ -107,7 +109,10 @@ def add_comment_to_ticket(request, pk):
     return render(request, "tickets/add_comment_to_ticket.html", context)
 
 def ticket_vote(request, ticket_id, user_id):
-    user = User.objects.get(id=user_id)
+    if user:
+        user = User.objects.get(id=user_id)
+    else:
+        user = None
     ticket = Ticket.objects.get(id=ticket_id)
     try:
         vote = Vote(user=user, ticket=ticket, date=timezone.now())
