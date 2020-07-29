@@ -60,7 +60,7 @@ def ticket_detail(request, pk):
     }
     return render(request, "tickets/ticket_detail.html", context)
 
-@login_required(login_url='accounts/login')
+@login_required(login_url='account_login')
 def ticket_new(request):
     if request.method == "POST":
         form = TicketForm(request.POST)
