@@ -74,6 +74,7 @@ def ticket_new(request):
     }
     return render(request, "tickets/ticket_new.html", context)
 
+@login_required(login_url='account_login')
 def edit_ticket(request, pk):
     ticket = get_object_or_404(Ticket, pk=pk)
     if request.method == "POST":
@@ -87,11 +88,13 @@ def edit_ticket(request, pk):
     }
     return render(request, "tickets/edit_ticket.html", context)
 
+@login_required(login_url='account_login')
 def delete_ticket(request, pk):
     ticket = get_object_or_404(Ticket, pk=pk)
     ticket.delete()
     return redirect('tickets_list')
 
+@login_required(login_url='account_login')
 def add_comment_to_ticket(request, pk):
     ticket = get_object_or_404(Ticket, pk=pk)
     if request.method == "POST":
@@ -108,6 +111,7 @@ def add_comment_to_ticket(request, pk):
     }
     return render(request, "tickets/add_comment_to_ticket.html", context)
 
+@login_required(login_url='account_login')
 def ticket_vote(request, ticket_id, user_id):
     if user:
         user = User.objects.get(id=user_id)
