@@ -9,6 +9,7 @@ from django.core.paginator import Paginator
 from .models import Ticket, Comment, Vote
 from .forms import TicketForm, CommentForm
 from crispy_forms.helper import FormHelper
+from django.http import HttpResponseForbidden
 
 
 def tickets_list(request):
@@ -54,9 +55,13 @@ def ticket_detail(request, pk):
 
     ticket = get_object_or_404(Ticket, pk=pk)
     votes = Vote.objects.filter(ticket_id=pk)
+    is_author = False
+    if request.user.id == ticket.ticket_author_id:
+        is_author = True
     context = {
         'ticket': ticket,
         'votes': votes,
+        'is_author': is_author
     }
     return render(request, "tickets/ticket_detail.html", context)
 
@@ -77,6 +82,9 @@ def ticket_new(request):
 @login_required(login_url='account_login')
 def edit_ticket(request, pk):
     ticket = get_object_or_404(Ticket, pk=pk)
+    # rozpoznanie czy użytkownik jest autorem ticketa (403 albo 406)
+    if request.user.id != ticket.ticket_author_id:
+        return HttpResponseForbidden()
     if request.method == "POST":
         form = TicketForm(request.POST, instance=ticket)
         if form.is_valid():
@@ -90,6 +98,7 @@ def edit_ticket(request, pk):
 
 @login_required(login_url='account_login')
 def delete_ticket(request, pk):
+    #autor albo deweloperzy
     ticket = get_object_or_404(Ticket, pk=pk)
     ticket.delete()
     return redirect('tickets_list')
