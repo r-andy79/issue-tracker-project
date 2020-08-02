@@ -55,13 +55,16 @@ def ticket_detail(request, pk):
 
     ticket = get_object_or_404(Ticket, pk=pk)
     votes = Vote.objects.filter(ticket_id=pk)
+    is_user = request.user.is_authenticated
+    print(request.user.id)
     is_author = False
     if request.user.id == ticket.ticket_author_id:
         is_author = True
     context = {
         'ticket': ticket,
         'votes': votes,
-        'is_author': is_author
+        'is_author': is_author,
+        'is_user': is_user
     }
     return render(request, "tickets/ticket_detail.html", context)
 
@@ -122,10 +125,8 @@ def add_comment_to_ticket(request, pk):
 
 @login_required(login_url='account_login')
 def ticket_vote(request, ticket_id, user_id):
-    if user:
-        user = User.objects.get(id=user_id)
-    else:
-        user = None
+    user = User.objects.get(id=user_id)
+    print(user)
     ticket = Ticket.objects.get(id=ticket_id)
     try:
         vote = Vote(user=user, ticket=ticket, date=timezone.now())

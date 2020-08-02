@@ -38,6 +38,7 @@
                 <div class="col p-4 d-flex flex-column position-static">
                     <h2>{{ ticket.title }}</h2>
                     <p>{{ ticket.get_ticket_status_display}}</p>
+                    <p>{{ ticket.created_date }}</p>
                     <p>{{ ticket.get_ticket_type_display }}</p>
                     <a href="{% url 'ticket_detail' pk=ticket.pk%}"><button class="btn btn-info">Show details</button></a>
                 </div>

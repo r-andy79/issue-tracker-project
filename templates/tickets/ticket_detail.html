@@ -23,16 +23,18 @@
                 <p>No comments here yet</p>
                 {% endfor %}
                 <div class="col d-flex justify-content-end p-0">
-                    <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
                     {% if is_author %}
+                        <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
+                        <a href="{% url 'delete_ticket' pk=ticket.pk %}"><button class="btn btn-sm btn-danger ml-1">Delete</button></a>
                         <a href="{% url 'edit_ticket' pk=ticket.pk %}"><button class="btn btn-sm btn-success ml-1">Edit</button></a>
-                    {% endif %}
-                    <a href="{% url 'delete_ticket' pk=ticket.pk %}"><button class="btn btn-sm btn-danger ml-1">Delete</button></a>
-                    <a href="{% url 'add_comment' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Add comment</button></a>
-                    {% if user.id == null %}
-                        <a href="#"><button class="btn btn-sm btn-warning ml-1" disabled>Vote</button></a>
+                        <a href="{% url 'add_comment' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Add comment</button></a>
+                        <a href="{% url 'ticket_vote' ticket_id=ticket.pk user_id=user.id %}"><button class="btn btn-sm btn-warning ml-1">Vote</button></a>
+                    {% elif is_user %}
+                        <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
+                        <a href="{% url 'add_comment' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Add comment</button></a>
+                        <a href="{% url 'ticket_vote' ticket_id=ticket.pk user_id=user.id %}"><button class="btn btn-sm btn-warning ml-1">Vote</button></a>
                     {% else %}
-                    <a href="{% url 'ticket_vote' ticket_id=ticket.pk user_id=user.id %}"><button class="btn btn-sm btn-warning ml-1">Vote</button></a>
+                        <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
                     {% endif %}
                 </div>
             </div>
