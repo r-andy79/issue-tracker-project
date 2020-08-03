@@ -56,7 +56,8 @@ def ticket_detail(request, pk):
     ticket = get_object_or_404(Ticket, pk=pk)
     votes = Vote.objects.filter(ticket_id=pk)
     is_user = request.user.is_authenticated
-    print(request.user.id)
+    ticket_type = ticket.ticket_type
+    print(ticket_type)
     is_author = False
     if request.user.id == ticket.ticket_author_id:
         is_author = True
