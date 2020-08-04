@@ -41,7 +41,7 @@
                         <p class="small">Description: {{ ticket.description|truncatewords:8 }}</p>
                         <div class="d-flex flex-row align-items-baseline">
                             <a class="mr-2" href="{% url 'ticket_detail' pk=ticket.pk%}"><button class="btn btn-sm btn-info"><i class="far fa-file-alt pr-2"></i>Show details</button></a>
-                            <a class="mr-2" href="#"><button class="btn btn-sm btn-danger"><i class="fas fa-vote-yea pr-2"></i>Pay</button></a>
+                            <a class="mr-2" href="#"><button class="btn btn-sm btn-danger"><i class="fas fa-money-bill-alt pr-2"></i>Pay</button></a>
                             <p class="small mb-0">Amount: 120</p>
                         </div>
                 </div>

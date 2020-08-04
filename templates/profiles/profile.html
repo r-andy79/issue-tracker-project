@@ -8,10 +8,20 @@
 </div>
 {% endblock %}
 {% block content %}
-<h1>Profile</h1>
-{{ user.username }}
-{% for ticket in tickets %}
-<p>{{ ticket.title }}</p>
-<p>{{ ticket.description }}</p>
-{% endfor %}
+<div class="container">
+    <div class="row">
+        <div class="col border rounded shadow p-3">
+            {% for ticket in tickets %}
+                {% if ticket.ticket_status == "C" %}
+                    <p>{{ ticket.title }}</p>
+                    <p>{{ ticket.description }}</p>
+                {% endif %}
+            {% empty %}
+                <p>Nothing's here</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}
