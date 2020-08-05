@@ -138,3 +138,10 @@ def ticket_vote(request, ticket_id, user_id):
     except:
         print('something went wrong')
     return redirect('ticket_detail', pk=ticket.pk)
+
+def pay(request):
+    # ticket = get_object_or_404(Ticket, pk=pk)
+    # context = {
+    #     'ticket': ticket
+    # }
+    return render(request, "tickets/payment.html")
