@@ -8,5 +8,11 @@
 </div>
 {% endblock %}
 {% block content %}
-<h1>Payment test</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="col d-flex justify-content-center p-0">
+        <button class="btn btn-success justify-content-end" type="submit">Pay</button>
+    </div>
+</form>
 {% endblock %}

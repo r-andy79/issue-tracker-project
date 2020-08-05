@@ -6,8 +6,8 @@ from django.db.models import Q
 from django.db import IntegrityError
 from django.utils import timezone
 from django.core.paginator import Paginator
-from .models import Ticket, Comment, Vote
-from .forms import TicketForm, CommentForm
+from .models import Ticket, Comment, Vote, Payment
+from .forms import TicketForm, CommentForm, PaymentForm
 from crispy_forms.helper import FormHelper
 from django.http import HttpResponseForbidden
 
@@ -87,10 +87,8 @@ def ticket_new(request):
 def edit_ticket(request, pk):
     ticket = get_object_or_404(Ticket, pk=pk)
     # rozpoznanie czy użytkownik jest autorem ticketa (403 albo 406)
-    if request.user.id != ticket.ticket_author_id:
-        return HttpResponseForbidden()
     if request.method == "POST":
-        form = TicketForm(request.POST, instance=ticket)
+        form = PaymentForm(request.POST, instance=ticket)
         if form.is_valid():
             form.save()
             return redirect('ticket_detail', pk)
@@ -139,9 +137,15 @@ def ticket_vote(request, ticket_id, user_id):
         print('something went wrong')
     return redirect('ticket_detail', pk=ticket.pk)
 
-def pay(request):
-    # ticket = get_object_or_404(Ticket, pk=pk)
-    # context = {
-    #     'ticket': ticket
-    # }
-    return render(request, "tickets/payment.html")
+def pay(request, pk):
+    ticket = get_object_or_404(Ticket, pk=pk)
+    if request.method == "POST":
+        form = PaymentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('ticket_detail', pk)
+    form = PaymentForm()
+    context = {
+        'form': form
+    }
+    return render(request, "tickets/payment.html", context)
