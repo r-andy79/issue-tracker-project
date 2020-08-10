@@ -62,7 +62,7 @@
                     {% elif is_user %}
                         <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
                         <a href="{% url 'add_comment' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Add comment</button></a>
-                        <a href="#"><button class="btn btn-sm btn-warning ml-1">Pay</button></a>
+                        <a href="{% url 'pay' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Pay</button></a>
                     {% else %}
                         <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
                     {% endif %}

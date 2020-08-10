@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404, redirect
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.db import IntegrityError
@@ -9,7 +11,10 @@ from django.core.paginator import Paginator
 from .models import Ticket, Comment, Vote, Payment
 from .forms import TicketForm, CommentForm, PaymentForm
 from crispy_forms.helper import FormHelper
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, JsonResponse
+import stripe
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 def tickets_list(request):
@@ -142,10 +147,40 @@ def pay(request, pk):
     if request.method == "POST":
         form = PaymentForm(request.POST)
         if form.is_valid():
+            # tu tworzę dwa obiekty jakie są wymagane z poziomu stripe
+            form.instance.user = request.user
+            form.instance.ticket = ticket
+            customer = stripe.Customer.create(
+                user = request.user.email,
+                source = request.POST['stripeToken']
+            )
+            charge = stripe.Charge.create(
+                customer = customer,
+                amount = 500,
+                currency  = 'eur',
+                description = 'Donation'
+            )
             form.save()
             return redirect('ticket_detail', pk)
     form = PaymentForm()
     context = {
         'form': form
     }
-    return render(request, "tickets/payment.html", context)
+    return render(request, "tickets/payment.html", context) # redirect do success
+
+def charge(request):
+    amount = 5
+    if request.method == 'POST':
+        print('Data', request.POST)
+
+    return redirect(reverse('success', args=[amount]))
+
+@csrf_exempt
+def stripe_config(request):
+    if request.method == 'GET':
+        stripe_config = {'publicKey': settings.STRIPE_PUBLISHABLE_KEY}
+        return JsonResponse(stripe_config, safe=False)
+
+def successMsg(request, args):
+    amount = args
+    return render(request, 'tickets/success.html', {'amount': amount})

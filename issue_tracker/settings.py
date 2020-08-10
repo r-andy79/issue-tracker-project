@@ -40,10 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'crispy_forms',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -63,7 +63,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),
-            os.path.join(BASE_DIR, 'templates', 'allauth', 'tickets'),
+            os.path.join(BASE_DIR, 'templates', 'allauth', 'tickets', 'profiles'),
             os.path.join(BASE_DIR, 'issue_tracker/templates')
         ],
         'APP_DIRS': True,
@@ -155,3 +155,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+STRIPE_PUBLISHABLE_KEY = 'pk_test_ykHKKk7JmbysFSB192veebsA00rCY6IypV'
+STRIPE_SECRET_KEY = ''
