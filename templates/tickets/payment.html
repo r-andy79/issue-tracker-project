@@ -5,7 +5,7 @@
 <style>
     .StripeElement {
     box-sizing: border-box;
-
+    width: 100%;
     height: 40px;
 
     padding: 10px 12px;
@@ -34,8 +34,8 @@
 {% block extra_js %}
 <script src="https://js.stripe.com/v3/"></script>
 <script>
-    // Create a Stripe client.
-var stripe = Stripe('pk_test_ykHKKk7JmbysFSB192veebsA00rCY6IypV');
+$(function() {
+    var stripe = Stripe('pk_test_ykHKKk7JmbysFSB192veebsA00rCY6IypV');
 
 // Create an instance of Elements.
 var elements = stripe.elements();
@@ -103,6 +103,8 @@ function stripeTokenHandler(token) {
   // Submit the form
   form.submit();
 }
+})
+
 </script>
 {% endblock %}
 
@@ -126,7 +128,7 @@ function stripeTokenHandler(token) {
                     <button class="btn btn-success justify-content-end" type="submit">Pay</button>
                 </div>
             </form> -->
-            <form action="{% url 'charge' %}" method="post" id="payment-form">
+            <form action="{% url 'pay' ticket.id %}" method="post" id="payment-form">
                 {% csrf_token %}
                 <div class="form-row">
                   <label for="card-element">
@@ -139,6 +141,7 @@ function stripeTokenHandler(token) {
                   <!-- Used to display form errors. -->
                   <div id="card-errors" role="alert"></div>
                 </div>
+                {{ form|crispy }}
               
                 <button>Submit Payment</button>
               </form>

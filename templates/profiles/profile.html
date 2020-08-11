@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col border rounded shadow p-3">
             {% for ticket in tickets %}
-                {% if ticket.ticket_status == "C" %}
+                {% if ticket.ticket_status == "T" %}
                     <p>{{ ticket.title }}</p>
                     <p>{{ ticket.description }}</p>
                 {% endif %}

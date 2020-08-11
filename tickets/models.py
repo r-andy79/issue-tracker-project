@@ -55,3 +55,6 @@ class Payment(models.Model):
 
     def __str__(self):
         return str(self.user) + ":" + str(self.ticket) + " " + str(self.date) + " " + str(self.payment_value)
+
+    def cents_amount(self):
+        return int(self.payment_value) * 100

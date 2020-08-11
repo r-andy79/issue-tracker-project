@@ -145,26 +145,36 @@ def ticket_vote(request, ticket_id, user_id):
 def pay(request, pk):
     ticket = get_object_or_404(Ticket, pk=pk)
     if request.method == "POST":
+        print('method POST')
         form = PaymentForm(request.POST)
-        if form.is_valid():
+        if form.is_valid(): # akcja is_valid notuje wewnątrz formularza błędy
+            # 2. przypadek gdy wszystkie dane są w porządku
+            print('form valid')
             # tu tworzę dwa obiekty jakie są wymagane z poziomu stripe
             form.instance.user = request.user
             form.instance.ticket = ticket
             customer = stripe.Customer.create(
-                user = request.user.email,
+                email = request.user.email,
+                name = request.user.username,
                 source = request.POST['stripeToken']
             )
             charge = stripe.Charge.create(
                 customer = customer,
-                amount = 500,
+                amount = form.instance.cents_amount(),
                 currency  = 'eur',
-                description = 'Donation'
+                description = 'Donation',
+                #idempotency_key=
             )
+            print(charge)
             form.save()
-            return redirect('ticket_detail', pk)
-    form = PaymentForm()
+            return redirect(reverse('success', args=[form.instance.payment_value]))
+    else:
+        # 1. odpala się tylko przy pierwszym wejściu na stronę
+        form = PaymentForm()
     context = {
-        'form': form
+        'form': form, # gdy mamy POST to tutaj wpada form = PaymentForm(request.POST)
+                      # gdy mamy GET wtedy wpada form = PaymentForm()
+        'ticket': ticket
     }
     return render(request, "tickets/payment.html", context) # redirect do success
 
@@ -172,7 +182,6 @@ def charge(request):
     amount = 5
     if request.method == 'POST':
         print('Data', request.POST)
-
     return redirect(reverse('success', args=[amount]))
 
 @csrf_exempt
