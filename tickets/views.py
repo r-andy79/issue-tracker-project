@@ -18,39 +18,15 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 def tickets_list(request):
-    tickets = Ticket.objects.all()
-    query = None
+    bugs_list_short = Ticket.objects.filter(ticket_type="bug").order_by('-created_date')[:5]
+    features_list_short = Ticket.objects.filter(ticket_type="feature").order_by('-created_date')[:5]
 
-    if request.GET:
-        if 'q' in request.GET:
-            query = request.GET['q']
-            if not query:
-                messages.error(request, "You didn't enter any search criteria!")
-                return redirect(reverse('tickets_list'))
-            
-            queries = Q(title__icontains=query) | Q(description__icontains=query)
-            tickets = tickets.filter(queries)
-            print(tickets)
-
-    bugs = []
-    features = []
-    for ticket in tickets:
-        if ticket.ticket_type == "bug":
-            bugs.append(ticket)
-        else:
-            features.append(ticket)
-    bugs_count = len(bugs)
-    features_count = len(features)
     context = {
-        'tickets': tickets,
-        'search_term': query,
-        'tickets': tickets,
-        'bugs': bugs,
-        'features': features,
-        'bugs_count': bugs_count,
-        'features_count': features_count
+        'bugs_list_short': bugs_list_short,
+        'features_list_short': features_list_short
     }
     return render(request, "tickets/tickets_list.html", context)
+
 
 def ticket_detail(request, pk):
     if request.user.is_authenticated:
