@@ -5,7 +5,7 @@ class TicketForm(forms.ModelForm):
 
     class Meta:
         model = Ticket
-        fields = ('title', 'ticket_type', 'ticket_author', 'description')
+        fields = ('title', 'ticket_type', 'description')
 
 class CommentForm(forms.ModelForm):
 

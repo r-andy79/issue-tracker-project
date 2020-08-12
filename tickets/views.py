@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.db import IntegrityError
 from django.utils import timezone
 from django.core.paginator import Paginator
@@ -36,15 +36,19 @@ def ticket_detail(request, pk):
 
     ticket = get_object_or_404(Ticket, pk=pk)
     votes = Vote.objects.filter(ticket_id=pk)
+    payments_sum = Payment.objects.filter(ticket_id=pk).aggregate(Sum('payment_value'))
+    payments = Payment.objects.filter(ticket_id=pk)
+    print(payments)
     is_user = request.user.is_authenticated
     ticket_type = ticket.ticket_type
-    print(ticket_type)
     is_author = False
     if request.user.id == ticket.ticket_author_id:
         is_author = True
     context = {
         'ticket': ticket,
         'votes': votes,
+        'payments_sum': payments_sum,
+        'payments': payments,
         'is_author': is_author,
         'is_user': is_user
     }
@@ -55,6 +59,8 @@ def ticket_new(request):
     if request.method == "POST":
         form = TicketForm(request.POST)
         if form.is_valid():
+            ticket = form.save(commit=False)
+            ticket.ticket_author = request.user
             form.save()
             return redirect('tickets_list')
     else:

@@ -44,7 +44,7 @@
                 <h2>{{ ticket.title }}</h2>
                 <hr>
                 <p class="small">Author: {{ ticket.ticket_author }} | Ticket type: {{ ticket.get_ticket_type_display }} | Ticket status: {{ ticket.get_ticket_status_display }} | Date created: {{ ticket.created_date }}</p>
-                <p>Votes: {{ votes.count }}</p>
+                <p>Payments sum: €{{ payments_sum.payment_value__sum }}, donation(s) made by: {{ payments.count }} user(s)</p>
                 <p>{{ ticket.description }}</p>
                 <h3>Comments</h3>
                 {% for comment in ticket.comments.all %}
