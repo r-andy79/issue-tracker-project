@@ -20,13 +20,26 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 def tickets_list(request):
     bugs_list_short = Ticket.objects.filter(ticket_type="bug").order_by('-created_date')[:5]
     features_list_short = Ticket.objects.filter(ticket_type="feature").order_by('-created_date')[:5]
-
+    votes = Vote.objects.all()
     context = {
         'bugs_list_short': bugs_list_short,
         'features_list_short': features_list_short
     }
     return render(request, "tickets/tickets_list.html", context)
 
+def bugs_list(request):
+    bugs_list = Ticket.objects.filter(ticket_type="bug").filter(ticket_status="T")|Ticket.objects.filter(ticket_type="bug").filter(ticket_status="D")
+    context = {
+        'bugs_list': bugs_list
+    }
+    return render(request, "tickets/bugs_list.html", context)
+
+def features_list(request):
+    features_list = Ticket.objects.filter(ticket_type="feature").filter(ticket_status="T")|Ticket.objects.filter(ticket_type="feature").filter(ticket_status="D")
+    context = {
+        'features_list': features_list
+    }
+    return render(request, "tickets/features_list.html", context)
 
 def ticket_detail(request, pk):
     if request.user.is_authenticated:
@@ -38,7 +51,6 @@ def ticket_detail(request, pk):
     votes = Vote.objects.filter(ticket_id=pk)
     payments_sum = Payment.objects.filter(ticket_id=pk).aggregate(Sum('payment_value'))
     payments = Payment.objects.filter(ticket_id=pk)
-    print(payments)
     is_user = request.user.is_authenticated
     ticket_type = ticket.ticket_type
     is_author = False

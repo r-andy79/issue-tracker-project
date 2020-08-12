@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Tickets{% endblock title %}
+{% block content %}
+<div class="container">
+    <div class="row my-4 border rounded">
+        <div class="col-md-12">
+            <h2>Bugs</h2>
+            {% for bug in bugs_list %}
+            <div
+                class="row no-gutters border rounded overflow-hiddem flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static shadow">
+                    <h3>{{ bug.title }}</h3>
+                    <p class="small mb-2">Ticket type: <strong>{{ bug.get_ticket_type_display }}</strong> | Ticket
+                        status: <strong>{{ bug.get_ticket_status_display}}</strong> | Date created:
+                        <strong>{{ bug.created_date }}</strong></p>
+                    <p class="small">Description: {{ bug.description|truncatewords:8 }}</p>
+                    <div class="d-flex flex-row align-items-baseline">
+                        <a class="mr-2" href="{% url 'ticket_detail' pk=bug.pk%}"><button class="btn btn-sm btn-info"><i
+                                    class="far fa-file-alt pr-2"></i>Show details</button></a>
+                        <a class="mr-2" href="#"><button class="btn btn-sm btn-danger"><i
+                                    class="fas fa-vote-yea pr-2"></i>I have this too!</button></a>
+                        <p class="small mb-0">Votes: 25</p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-md-6">
+                <p>no tickets</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endblock %}

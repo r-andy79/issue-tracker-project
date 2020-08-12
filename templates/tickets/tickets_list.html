@@ -10,7 +10,7 @@
             <div
                 class="row no-gutters border rounded overflow-hiddem flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col p-4 d-flex flex-column position-static shadow">
-                    <h3>{{ bug.title }}{{ votes.count }}</h3>
+                    <h3>{{ bug.title }}</h3>
                     <p class="small mb-2">Ticket type: <strong>{{ bug.get_ticket_type_display }}</strong> | Ticket
                         status: <strong>{{ bug.get_ticket_status_display}}</strong> | Date created:
                         <strong>{{ bug.created_date }}</strong></p>
@@ -29,9 +29,7 @@
                 <p>no tickets</p>
             </div>
             {% endfor %}
-            {% if features_list_short %}
-            <a href="#">Show more</a>
-            {% endif %}
+            <a href="{% url 'bugs_list' %}">Show more</a>
         </div>
             <div class="col-md-6">
                 <h2>Features</h2>
@@ -58,9 +56,9 @@
                     <p>no tickets</p>
                 </div>
                 {% endfor %}
-                {% if features_list_short %}
-                <a href="#">Show more</a>
-                {% endif %}
+
+                <a href="{% url 'features_list' %}">Show more</a>
+
             </div>
         </div>
         {% endblock %}
