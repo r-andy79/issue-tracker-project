@@ -8,68 +8,86 @@
 </div>
 {% endblock %}
 {% block content %}
-    <div class="container">
-        <div class="row">
-            {% if ticket.ticket_type == "bug" %}
-            <div class="col border rounded shadow p-3">
-                <h2>{{ ticket.title }}</h2>
-                <hr>
-                <p class="small">Author: {{ ticket.ticket_author }} | Ticket type: {{ ticket.get_ticket_type_display }} | Ticket status: {{ ticket.get_ticket_status_display }} | Date created: {{ ticket.created_date }}</p>
-                <p>Votes: {{ votes.count }}</p>
-                <p>{{ ticket.description }}</p>
+<div class="container">
+    <div class="row">
+        {% if ticket.ticket_type == "bug" %}
+        <div class="col border rounded shadow p-3">
+            <h2>{{ ticket.title }}</h2>
+            <hr>
+            <p class="small">Author: {{ ticket.ticket_author }} | Ticket type: {{ ticket.get_ticket_type_display }} |
+                Ticket status: {{ ticket.get_ticket_status_display }} | Date created: {{ ticket.created_date }}</p>
+            <p>Votes: {{ votes.count }}</p>
+            <p>{{ ticket.description }}</p>
+            <div class="col d-flex justify-content-end p-0">
+                {% if is_author %}
+                <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
+                <a href="{% url 'delete_ticket' pk=ticket.pk %}"><button
+                        class="btn btn-sm btn-danger ml-1">Delete</button></a>
+                <a href="{% url 'edit_ticket' pk=ticket.pk %}"><button
+                        class="btn btn-sm btn-success ml-1">Edit</button></a>
+                <a href="{% url 'add_comment' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Add
+                        comment</button></a>
+                <a href="{% url 'ticket_vote' ticket_id=ticket.pk user_id=user.id %}"><button
+                        class="btn btn-sm btn-warning ml-1">Vote</button></a>
+                {% elif is_user %}
+                <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
+                <a href="{% url 'add_comment' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Add
+                        comment</button></a>
+                <a href="{% url 'ticket_vote' ticket_id=ticket.pk user_id=user.id %}"><button
+                        class="btn btn-sm btn-warning ml-1">Vote</button></a>
+                {% else %}
+                <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
+                {% endif %}
+            </div>
                 <h3>Comments</h3>
                 {% for comment in ticket.comments.all %}
                 <p><span>{{ comment.comment_author }}: </span>{{ comment.comment_text }}</p>
                 {% empty %}
-                <p>No comments here yet</p>
+                <p>No comments added yet</p>
                 {% endfor %}
-                <div class="col d-flex justify-content-end p-0">
-                    {% if is_author %}
-                        <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
-                        <a href="{% url 'delete_ticket' pk=ticket.pk %}"><button class="btn btn-sm btn-danger ml-1">Delete</button></a>
-                        <a href="{% url 'edit_ticket' pk=ticket.pk %}"><button class="btn btn-sm btn-success ml-1">Edit</button></a>
-                        <a href="{% url 'add_comment' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Add comment</button></a>
-                        <a href="{% url 'ticket_vote' ticket_id=ticket.pk user_id=user.id %}"><button class="btn btn-sm btn-warning ml-1">Vote</button></a>
-                    {% elif is_user %}
-                        <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
-                        <a href="{% url 'add_comment' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Add comment</button></a>
-                        <a href="{% url 'ticket_vote' ticket_id=ticket.pk user_id=user.id %}"><button class="btn btn-sm btn-warning ml-1">Vote</button></a>
-                    {% else %}
-                        <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
-                    {% endif %}
-                </div>
-            </div>
-            {% else %}
-            <div class="col border rounded shadow p-3">
-                <h2>{{ ticket.title }}</h2>
-                <hr>
-                <p class="small">Author: {{ ticket.ticket_author }} | Ticket type: {{ ticket.get_ticket_type_display }} | Ticket status: {{ ticket.get_ticket_status_display }} | Date created: {{ ticket.created_date }}</p>
-                <p>Payments sum: €{{ payments_sum.payment_value__sum }}, donation(s) made by: {{ payments.count }} user(s)</p>
-                <p>{{ ticket.description }}</p>
-                <h3>Comments</h3>
-                {% for comment in ticket.comments.all %}
-                <p><span>{{ comment.comment_author }}: </span>{{ comment.comment_text }}</p>
-                {% empty %}
-                <p>No comments here yet</p>
-                {% endfor %}
-                <div class="col d-flex justify-content-end p-0">
-                    {% if is_author %}
-                        <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
-                        <a href="{% url 'delete_ticket' pk=ticket.pk %}"><button class="btn btn-sm btn-danger ml-1">Delete</button></a>
-                        <a href="{% url 'edit_ticket' pk=ticket.pk %}"><button class="btn btn-sm btn-success ml-1">Edit</button></a>
-                        <a href="{% url 'add_comment' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Add comment</button></a>
-                        <a href="#"><button class="btn btn-sm btn-warning ml-1">Pay</button></a>
-                    {% elif is_user %}
-                        <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
-                        <a href="{% url 'add_comment' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Add comment</button></a>
-                        <a href="{% url 'pay' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Pay</button></a>
-                    {% else %}
-                        <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
-                    {% endif %}
-                </div>
-            </div>
-            {% endif %}
         </div>
+        {% else %}
+        <div class="col border rounded shadow p-3">
+            <h2>{{ ticket.title }}</h2>
+            <hr>
+            <p class="small">Author: {{ ticket.ticket_author }} | Ticket type: {{ ticket.get_ticket_type_display }} |
+                Ticket status: {{ ticket.get_ticket_status_display }} | Date created: {{ ticket.created_date }}</p>
+            {% if payments_sum.payment_value__sum == None %}
+            <p>No donations have been made towards developing this feature, so far. Do you want to be first?</p>
+            {% else %}
+            <p>Payments sum: €{{ payments_sum.payment_value__sum }}, donation(s) made by: {{ payments.count }} user(s)
+            </p>
+            {% endif %}
+            <p>{{ ticket.description }}</p>
+
+            <div class="col d-flex justify-content-end p-0">
+                {% if is_author %}
+                <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
+                <a href="{% url 'delete_ticket' pk=ticket.pk %}"><button
+                        class="btn btn-sm btn-danger ml-1">Delete</button></a>
+                <a href="{% url 'edit_ticket' pk=ticket.pk %}"><button
+                        class="btn btn-sm btn-success ml-1">Edit</button></a>
+                <a href="{% url 'add_comment' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Add
+                        comment</button></a>
+                <a href="#"><button class="btn btn-sm btn-warning ml-1">Pay</button></a>
+                {% elif is_user %}
+                <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
+                <a href="{% url 'add_comment' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Add
+                        comment</button></a>
+                <a href="{% url 'pay' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Pay</button></a>
+                {% else %}
+                <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
+                {% endif %}
+            </div>
+            <h3>Comments</h3>
+            {% for comment in ticket.comments.all %}
+            <p><span>{{ comment.comment_author }}: </span>{{ comment.comment_text }}</p>
+            {% empty %}
+            <p>No comments added yet</p>
+            {% endfor %}
+        </div>
+        {% endif %}
     </div>
+</div>
 
 {% endblock %}

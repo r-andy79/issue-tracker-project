@@ -129,11 +129,11 @@ def ticket_vote(request, ticket_id, user_id):
     try:
         vote = Vote(user=user, ticket=ticket, date=timezone.now())
         vote.save()
-        print('your vote has been added')
+        messages.success(request, 'Your vote has been added')
     except IntegrityError as e:
-        print('you can\'t vote twice')
+        messages.warning(request, 'You can\'t vote twice')
     except:
-        print('something went wrong')
+        pmessages.warning(request, 'Something went wrong')
     return redirect('ticket_detail', pk=ticket.pk)
 
 def pay(request, pk):
