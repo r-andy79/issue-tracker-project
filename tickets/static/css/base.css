@@ -6,19 +6,34 @@ body {
     height: calc(100vh - 164px);
     color: #555;
     font-family: 'Montserrat';
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+/* Navigation -------------------*/
+.nav-wrapper {
+    background: #0af;
+}
+.navbar {
+    padding: 0.5rem 0;
+    color: #fff;
 }
 
-/* ---------------- */
-
-/* .ticket-container {
-    border: 1px solid red;
-} */
-
-.test {
-    border: 1px solid black;
+.navbar-brand.logo-font {
+    color: #fff;
 }
 
-/* ---------------- */
+.nav-link {
+    color: #fff;
+}
+
+.nav-link:hover {
+    color: #ccc;
+}
+
+/* Helper classes ---------------*/
+.message-container {
+    background: tomato;
+}
 
 /* from Bulma */
 .icon {
@@ -31,6 +46,7 @@ body {
 
 .logo-font {
     text-transform: uppercase;
+    font-weight: 500;
 }
 
 .main-logo-link {

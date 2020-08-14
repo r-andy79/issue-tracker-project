@@ -7,8 +7,7 @@ from django.http import HttpResponseForbidden
 # Create your views here.
 
 @login_required(login_url='account_login')
-def profile_view(request, user_id, ticket_id):
-    ticket = get_object_or_404(Ticket, pk=ticket_id)
+def profile_view(request, user_id):
     user = User.objects.get(id=user_id)
     if request.user.id == user_id:
         print('prawda')

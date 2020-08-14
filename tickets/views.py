@@ -20,10 +20,9 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 def tickets_list(request):
     bugs_list_short = Ticket.objects.filter(ticket_type="bug").order_by('-created_date')[:5]
     features_list_short = Ticket.objects.filter(ticket_type="feature").order_by('-created_date')[:5]
-    votes = Vote.objects.all()
     context = {
         'bugs_list_short': bugs_list_short,
-        'features_list_short': features_list_short
+        'features_list_short': features_list_short,
     }
     return render(request, "tickets/tickets_list.html", context)
 
