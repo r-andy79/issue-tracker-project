@@ -111,7 +111,9 @@ def add_comment_to_ticket(request, pk):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.ticket = ticket
+            comment.comment_author = request.user
             comment.save()
+            messages.success(request, 'Your comment has been added')
             return redirect('ticket_detail', pk=ticket.pk)
     else:
         form = CommentForm()

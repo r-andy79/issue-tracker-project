@@ -11,7 +11,7 @@ class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        fields = ('comment_author', 'comment_text')
+        fields = ('comment_text', )
 
 class PaymentForm(forms.ModelForm):
 
