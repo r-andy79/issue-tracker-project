@@ -6,11 +6,19 @@
     <div class="row my-4 border rounded">
         <div class="col-md-12">
             <h2 class="p-2">Bugs</h2>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <label for="ascending">ascending</label>
+                <input type="radio" name="date" id="ascending" value="ascending" {{ascending_checked}} />
+                <label for="descending">descending</label>
+                <input type="radio" name="date" id="descending" value="descending" {{descending_checked}} />
+                <input type="submit">
+            </form>
             {% for bug in bugs_list %}
             <div
                 class="row no-gutters border rounded overflow-hiddem flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col p-4 d-flex flex-column position-static shadow">
-                    <h3>{{ bug.title }}</h3>
+                    <h4>{{ bug.title }}</h3>
                     <p class="small mb-2">Ticket type: <strong>{{ bug.get_ticket_type_display }}</strong> | Ticket
                         status: <strong>{{ bug.get_ticket_status_display}}</strong> | Date created:
                         <strong>{{ bug.created_date }}</strong></p>

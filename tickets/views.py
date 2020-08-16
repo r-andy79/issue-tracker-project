@@ -27,9 +27,25 @@ def tickets_list(request):
     return render(request, "tickets/tickets_list.html", context)
 
 def bugs_list(request):
-    bugs_list = Ticket.objects.filter(ticket_type="bug").filter(ticket_status="T")|Ticket.objects.filter(ticket_type="bug").filter(ticket_status="D")
+    criterion1 = Q(ticket_status="T")
+    criterion2 = Q(ticket_status="D")
+    criterion0 = Q(ticket_type="bug")
+    sorting_order = 'descending'
+    if sorting_order == 'descending':
+        bugs_list = Ticket.objects.filter(criterion0).filter(criterion1 | criterion2).order_by('-created_date')
+
+    if request.method=="POST":
+        sorting_order = request.POST['date']
+        if sorting_order == 'descending':
+            bugs_list = bugs_list.order_by('-created_date')
+        else:
+            bugs_list = bugs_list.order_by('created_date')
+        
+        
     context = {
-        'bugs_list': bugs_list
+        'bugs_list': bugs_list,
+        'ascending_checked': 'checked' if sorting_order == 'ascending' else '',
+        'descending_checked': 'checked' if sorting_order == 'descending' else '',
     }
     return render(request, "tickets/bugs_list.html", context)
 
