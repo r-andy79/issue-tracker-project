@@ -18,7 +18,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 def tickets_list(request):
-    bugs_list_short = Ticket.objects.filter(ticket_type="bug").order_by('-created_date')[:5]
+    bugs_list_short = Ticket.objects.filter(ticket_type="bug").annotate(total_votes=Sum('vote')).order_by('-created_date')[:5]
     features_list_short = Ticket.objects.filter(ticket_type="feature").order_by('-created_date')[:5]
     context = {
         'bugs_list_short': bugs_list_short,
@@ -165,7 +165,6 @@ def add_comment_to_ticket(request, pk):
 @login_required(login_url='account_login')
 def ticket_vote(request, ticket_id, user_id):
     user = User.objects.get(id=user_id)
-    print(user)
     ticket = Ticket.objects.get(id=ticket_id)
     try:
         vote = Vote(user=user, ticket=ticket, date=timezone.now())
