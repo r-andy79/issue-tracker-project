@@ -8,11 +8,29 @@
             <h2 class="p-2">Bugs</h2>
             <form action="" method="POST">
                 {% csrf_token %}
-                <label for="ascending">ascending</label>
-                <input type="radio" name="date" id="ascending" value="ascending" {{ascending_checked}} />
-                <label for="descending">descending</label>
-                <input type="radio" name="date" id="descending" value="descending" {{descending_checked}} />
-                <input type="submit">
+                <fieldset>
+                    <legend>Select bug status:</legend>
+                    <div>
+                        <input type="checkbox" id="to-do" name="status" value="T">
+                        <label for="to-do">To do</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="doing" name="status" value="D">
+                        <label for="doing">Doing</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="completed" name="status" value="C">
+                        <label for="completed">Completed</label>
+                      </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Sorting by date:</legend>
+                    <label for="ascending">ascending</label>
+                    <input type="radio" name="date" id="ascending" value="ascending" {{ascending_checked}} />
+                    <label for="descending">descending</label>
+                    <input type="radio" name="date" id="descending" value="descending" {{descending_checked}} />
+                    <input type="submit">
+                </fieldset>
             </form>
             {% for bug in bugs_list %}
             <div
