@@ -26,7 +26,7 @@ def tickets_list(request):
     }
     return render(request, "tickets/tickets_list.html", context)
 
-def customize_list(tickets_list, sorting_order):
+def sort_list(tickets_list, sorting_order):
     order_map = { 
         'descending': '-created_date', 
         'ascending': 'created_date',
@@ -34,8 +34,18 @@ def customize_list(tickets_list, sorting_order):
         'doing': 'D',
         'completed': 'C'
         }
-    customized_tickets_list = tickets_list.order_by(order_map[sorting_order])
-    return customized_tickets_list
+    sorted_tickets_list = tickets_list.order_by(order_map[sorting_order])
+    return sorted_tickets_list
+
+def filter_list(request, tickets_list):
+    q_objects = Q()
+    statuses = request.POST.getlist('status')
+    for status in statuses:
+        q_objects |= Q(ticket_status__contains=status)
+        print(q_objects)
+    filtered_tickets_list = tickets_list.filter(q_objects)
+    return filtered_tickets_list
+    
 
 def bugs_list(request):
     to_do = Q(ticket_status="T")
@@ -43,11 +53,6 @@ def bugs_list(request):
     bug = Q(ticket_type="bug")
     bugs = Ticket.objects.filter(bug).filter(to_do | doing)
     bugs_all = Ticket.objects.filter(bug)
-    q_objects = Q()
-    statuses = request.POST.getlist('status')
-    for s in statuses:
-        q_objects |= Q(ticket_status__contains=s)
-        print(q_objects)
     
     b_list = Ticket.objects.filter(bug).filter(q_objects)
     print(b_list)
