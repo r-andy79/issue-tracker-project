@@ -26,13 +26,13 @@ def tickets_list(request):
     }
     return render(request, "tickets/tickets_list.html", context)
 
-def customize_list(bugs_list, sorting_order):
+def customize_list(tickets_list, sorting_order):
     order_map = { 
         'descending': '-created_date', 
         'ascending': 'created_date'
         }
-    customized_bugs_list = bugs_list.order_by(order_map[sorting_order])
-    return customized_bugs_list
+    customized_tickets_list = tickets_list.order_by(order_map[sorting_order])
+    return customized_tickets_list
 
 def bugs_list(request):
     to_do = Q(ticket_status="T")
@@ -52,9 +52,19 @@ def bugs_list(request):
     return render(request, "tickets/bugs_list.html", context)
 
 def features_list(request):
-    features_list = Ticket.objects.filter(ticket_type="feature").filter(ticket_status="T")|Ticket.objects.filter(ticket_type="feature").filter(ticket_status="D")
+    to_do = Q(ticket_status="T")
+    doing = Q(ticket_status="D")
+    feature = Q(ticket_type="feature")
+    features = Ticket.objects.filter(feature).filter(to_do | doing)
+    
+    sorting_order = request.POST['date'] if request.method == "POST" else 'ascending'
+
+    features_list = customize_list(features, sorting_order)
+        
     context = {
-        'features_list': features_list
+        'features_list': features_list,
+        'ascending_checked': 'checked' if sorting_order == 'ascending' else '',
+        'descending_checked': 'checked' if sorting_order == 'descending' else '',
     }
     return render(request, "tickets/features_list.html", context)
 
