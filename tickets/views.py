@@ -37,7 +37,7 @@ def sort_list(tickets_list, sorting_order):
     sorted_tickets_list = tickets_list.order_by(order_map[sorting_order])
     return sorted_tickets_list
 
-def filter_list(request, tickets_list):
+def filter_list(tickets_list, request):
     q_objects = Q()
     statuses = request.POST.getlist('status')
     for status in statuses:
@@ -48,18 +48,16 @@ def filter_list(request, tickets_list):
     
 
 def bugs_list(request):
-    to_do = Q(ticket_status="T")
-    doing = Q(ticket_status="D")
     bug = Q(ticket_type="bug")
-    bugs = Ticket.objects.filter(bug).filter(to_do | doing)
     bugs_all = Ticket.objects.filter(bug)
     
-    b_list = Ticket.objects.filter(bug).filter(q_objects)
-    print(b_list)
+    # b_list = Ticket.objects.filter(bug).filter(q_objects)
     
     sorting_order = request.POST['date'] if request.method == "POST" else 'ascending'
 
-    bugs_list = customize_list(bugs, sorting_order)
+    bugs_list = sort_list(bugs_all, sorting_order)
+    bugs_list = filter_list(bugs_all, request)
+    print(bugs_list)
         
     context = {
         'bugs_list': bugs_list,
