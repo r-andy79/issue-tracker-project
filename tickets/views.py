@@ -126,7 +126,7 @@ def edit_ticket(request, pk):
     ticket = get_object_or_404(Ticket, pk=pk)
     # rozpoznanie czy użytkownik jest autorem ticketa (403 albo 406)
     if request.method == "POST":
-        form = PaymentForm(request.POST, instance=ticket)
+        form = TicketForm(request.POST, instance=ticket)
         if form.is_valid():
             form.save()
             return redirect('ticket_detail', pk)
