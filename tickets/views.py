@@ -50,37 +50,37 @@ def filter_list(tickets_list, request):
 def bugs_list(request):
     bug = Q(ticket_type="bug")
     bugs_all = Ticket.objects.filter(bug).annotate(total_votes=Count('vote'))
-    print(bugs_all[2].total_votes)
     
     # b_list = Ticket.objects.filter(bug).filter(q_objects)
     
     sorting_order = request.POST['date'] if request.method == "POST" else 'ascending'
     ticket_status = request.POST.getlist('status') if request.method == "POST" else ''
-    print(ticket_status)
 
-    bugs_list = filter_list(sort_list(bugs_all, sorting_order), request)
-    print(bugs_list)
+    sorted_bugs_list = sort_list(bugs_all, sorting_order)
+    filtered_bugs_list = filter_list(sorted_bugs_list, request)
         
     context = {
-        'bugs_list': bugs_list,
+        'bugs_list': filtered_bugs_list,
         'ascending_checked': 'checked' if sorting_order == 'ascending' else '',
         'descending_checked': 'checked' if sorting_order == 'descending' else '',
         'to_do_checked': 'checked' if ticket_status == 'T' else '',
+        'doing_checked': 'checked' if ticket_status == 'D' else '',
+        'completed_checked': 'checked' if ticket_status == 'C' else '',
     }
     return render(request, "tickets/bugs_list.html", context)
 
 def features_list(request):
-    to_do = Q(ticket_status="T")
-    doing = Q(ticket_status="D")
     feature = Q(ticket_type="feature")
-    features = Ticket.objects.filter(feature).filter(to_do | doing)
+    features_all = Ticket.objects.filter(feature).annotate(payments_sum=Sum('payment'))
     
     sorting_order = request.POST['date'] if request.method == "POST" else 'ascending'
+    ticket_status = request.POST.getlist('status') if request.method == "POST" else ''
 
-    features_list = customize_list(features, sorting_order)
+    sorted_features_list = sort_list(features_all, sorting_order)
+    filtered_features_list = filter_list(sorted_features_list, request)
         
     context = {
-        'features_list': features_list,
+        'features_list': filtered_features_list,
         'ascending_checked': 'checked' if sorting_order == 'ascending' else '',
         'descending_checked': 'checked' if sorting_order == 'descending' else '',
     }

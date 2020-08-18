@@ -8,6 +8,21 @@
             <h2>Features</h2>
             <form action="" method="POST">
                 {% csrf_token %}
+                <fieldset>
+                    <legend>Select bug status:</legend>
+                    <div>
+                        <input type="checkbox" id="to-do" name="status" value="T" {{to_do_checked}}>
+                        <label for="to-do">To do</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="doing" name="status" value="D" {{doing_checked}}>
+                        <label for="doing">Doing</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="completed" name="status" value="C" {{completed_checked}}>
+                        <label for="completed">Completed</label>
+                      </div>
+                </fieldset>
                 <label for="ascending">ascending</label>
                 <input type="radio" name="date" id="ascending" value="ascending" {{ascending_checked}} />
                 <label for="descending">descending</label>

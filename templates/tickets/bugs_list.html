@@ -11,15 +11,15 @@
                 <fieldset>
                     <legend>Select bug status:</legend>
                     <div>
-                        <input type="checkbox" id="to-do" name="status" value="T">
+                        <input type="checkbox" id="to-do" name="status" value="T" {{to_do_checked}}>
                         <label for="to-do">To do</label>
                       </div>
                       <div>
-                        <input type="checkbox" id="doing" name="status" value="D">
+                        <input type="checkbox" id="doing" name="status" value="D" {{doing_checked}}>
                         <label for="doing">Doing</label>
                       </div>
                       <div>
-                        <input type="checkbox" id="completed" name="status" value="C">
+                        <input type="checkbox" id="completed" name="status" value="C" {{completed_checked}}>
                         <label for="completed">Completed</label>
                       </div>
                 </fieldset>
@@ -34,7 +34,7 @@
             </form>
             {% for bug in bugs_list %}
             <div
-                class="row no-gutters border rounded overflow-hiddem flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col p-4 d-flex flex-column position-static shadow">
                     <h4>{{ bug.title }}</h3>
                     <p class="small mb-2">Ticket type: <strong>{{ bug.get_ticket_type_display }}</strong> | Ticket
@@ -46,7 +46,7 @@
                                     class="far fa-file-alt pr-2"></i>Show details</button></a>
                         <a class="mr-2" href="#"><button class="btn btn-sm btn-danger"><i
                                     class="fas fa-vote-yea pr-2"></i>I have this too!</button></a>
-                        <p class="small mb-0">Votes: 25</p>
+                        <p class="small mb-0">Votes: {{ bug.total_votes }}</p>
                     </div>
                 </div>
             </div>
