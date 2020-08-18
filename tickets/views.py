@@ -49,7 +49,8 @@ def filter_list(tickets_list, request):
 
 def bugs_list(request):
     bug = Q(ticket_type="bug")
-    bugs_all = Ticket.objects.filter(bug)
+    bugs_all = Ticket.objects.filter(bug).annotate(total_votes=Count('vote'))
+    print(bugs_all[2].total_votes)
     
     # b_list = Ticket.objects.filter(bug).filter(q_objects)
     
