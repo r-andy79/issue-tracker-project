@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
-from django.db.models import Q, Sum
+from django.db.models import Q, Sum, Count
 from django.db import IntegrityError
 from django.utils import timezone
 from django.core.paginator import Paginator
@@ -18,8 +18,8 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 def tickets_list(request):
-    bugs_list_short = Ticket.objects.filter(ticket_type="bug").annotate(total_votes=Sum('vote')).order_by('-created_date')[:5]
-    features_list_short = Ticket.objects.filter(ticket_type="feature").order_by('-created_date')[:5]
+    bugs_list_short = Ticket.objects.filter(ticket_type="bug").annotate(total_votes=Count("vote")).order_by('-created_date')[:5]
+    features_list_short = Ticket.objects.filter(ticket_type="feature").annotate(payments_sum=Sum("payment__payment_value")).order_by('-created_date')[:5]
     context = {
         'bugs_list_short': bugs_list_short,
         'features_list_short': features_list_short,
@@ -54,15 +54,17 @@ def bugs_list(request):
     # b_list = Ticket.objects.filter(bug).filter(q_objects)
     
     sorting_order = request.POST['date'] if request.method == "POST" else 'ascending'
+    ticket_status = request.POST.getlist('status') if request.method == "POST" else ''
+    print(ticket_status)
 
-    bugs_list = sort_list(bugs_all, sorting_order)
-    bugs_list = filter_list(bugs_all, request)
+    bugs_list = filter_list(sort_list(bugs_all, sorting_order), request)
     print(bugs_list)
         
     context = {
         'bugs_list': bugs_list,
         'ascending_checked': 'checked' if sorting_order == 'ascending' else '',
         'descending_checked': 'checked' if sorting_order == 'descending' else '',
+        'to_do_checked': 'checked' if ticket_status == 'T' else '',
     }
     return render(request, "tickets/bugs_list.html", context)
 
