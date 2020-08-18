@@ -14,44 +14,46 @@
         <div class="col border rounded shadow p-3">
             <h2>{{ ticket.title }}</h2>
             <hr>
-            <p class="small">Author: {{ ticket.ticket_author }} | Ticket type: {{ ticket.get_ticket_type_display }} |
-                Ticket status: {{ ticket.get_ticket_status_display }} | Date created: {{ ticket.created_date }}</p>
+            <p class="small">Author: {{ ticket.ticket_author }} | Type: {{ ticket.get_ticket_type_display }} |
+                Status: {{ ticket.get_ticket_status_display }} | Date created: {{ ticket.created_date }}</p>
             <p>Votes: {{ votes.count }}</p>
             <p>{{ ticket.description }}</p>
             <div class="col d-flex justify-content-end p-0">
-                {% if is_author %}
-                <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
+                {% if is_author or is_superuser %}
+                <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Main page</button></a>
                 <a href="{% url 'delete_ticket' pk=ticket.pk %}"><button
-                        class="btn btn-sm btn-danger ml-1">Delete</button></a>
+                        class="btn btn-sm btn-danger ml-1"><i class="far fa-times-circle pr-1"></i>Delete</button></a>
                 <a href="{% url 'edit_ticket' pk=ticket.pk %}"><button
-                        class="btn btn-sm btn-success ml-1">Edit</button></a>
+                        class="btn btn-sm btn-success ml-1"><i class="far fa-edit pr-1"></i>Edit</button></a>
                 <a href="{% url 'add_comment' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Add
                         comment</button></a>
                 <a href="{% url 'ticket_vote' ticket_id=ticket.pk user_id=user.id %}"><button
-                        class="btn btn-sm btn-warning ml-1">Vote</button></a>
+                        class="btn btn-sm btn-warning ml-1"><i class="fas fa-vote-yea pr-1 d-xs-none"></i>Vote</button></a>
                 {% elif is_user %}
-                <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
+                <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Main page</button></a>
                 <a href="{% url 'add_comment' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Add
                         comment</button></a>
                 <a href="{% url 'ticket_vote' ticket_id=ticket.pk user_id=user.id %}"><button
                         class="btn btn-sm btn-warning ml-1">Vote</button></a>
                 {% else %}
-                <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
+                <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Main page</button></a>
                 {% endif %}
             </div>
-                <h3>Comments</h3>
+            <div class="container-fluid border rounded mt-3 p-3">
+                <h4>Comments</h4>
                 {% for comment in ticket.comments.all %}
                 <p><span>{{ comment.comment_author }}: </span>{{ comment.comment_text }}</p>
                 {% empty %}
                 <p>No comments added yet</p>
                 {% endfor %}
+            </div>
         </div>
         {% else %}
         <div class="col border rounded shadow p-3">
             <h2>{{ ticket.title }}</h2>
             <hr>
-            <p class="small">Author: {{ ticket.ticket_author }} | Ticket type: {{ ticket.get_ticket_type_display }} |
-                Ticket status: {{ ticket.get_ticket_status_display }} | Date created: {{ ticket.created_date }}</p>
+            <p class="small">Author: {{ ticket.ticket_author }} | Type: {{ ticket.get_ticket_type_display }} |
+                Status: {{ ticket.get_ticket_status_display }} | Date created: {{ ticket.created_date }}</p>
             {% if payments_sum.payment_value__sum == None %}
             <p>No donations have been made towards developing this feature, so far. Do you want to be first?</p>
             {% else %}
@@ -66,7 +68,7 @@
                 <a href="{% url 'delete_ticket' pk=ticket.pk %}"><button
                         class="btn btn-sm btn-danger ml-1">Delete</button></a>
                 <a href="{% url 'edit_ticket' pk=ticket.pk %}"><button
-                        class="btn btn-sm btn-success ml-1">Edit</button></a>
+                        class="btn btn-sm btn-success ml-1"><i class="far fa-edit"></i>Edit</button></a>
                 <a href="{% url 'add_comment' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Add
                         comment</button></a>
                 <a href="#"><button class="btn btn-sm btn-warning ml-1">Pay</button></a>
