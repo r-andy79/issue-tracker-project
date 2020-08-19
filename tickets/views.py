@@ -18,6 +18,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 def tickets_list(request):
+    """Displays the five latest tickets on the main site of the application"""
     bugs_list_short = Ticket.objects.filter(ticket_type="bug").annotate(total_votes=Count("vote")).order_by('-created_date')[:5]
     features_list_short = Ticket.objects.filter(ticket_type="feature").annotate(payments_sum=Sum("payment__payment_value")).order_by('-created_date')[:5]
     context = {
@@ -28,8 +29,10 @@ def tickets_list(request):
 
 def sort_list(tickets_list, sorting_order):
     order_map = { 
-        'descending': '-created_date', 
-        'ascending': 'created_date',
+        'date_descending': '-created_date', 
+        'date_ascending': 'created_date',
+        'vote_descending': '-total_votes',
+        'vote_ascending': 'total_votes',
         'to do': 'T',
         'doing': 'D',
         'completed': 'C'
@@ -53,16 +56,17 @@ def bugs_list(request):
     
     # b_list = Ticket.objects.filter(bug).filter(q_objects)
     
-    sorting_order = request.POST['date'] if request.method == "POST" else 'ascending'
+    sorting_order = request.POST['date'] if request.method == "POST" else 'date_ascending'
     ticket_status = request.POST.getlist('status') if request.method == "POST" else ''
-
     sorted_bugs_list = sort_list(bugs_all, sorting_order)
     filtered_bugs_list = filter_list(sorted_bugs_list, request)
         
     context = {
         'bugs_list': filtered_bugs_list,
-        'ascending_checked': 'checked' if sorting_order == 'ascending' else '',
-        'descending_checked': 'checked' if sorting_order == 'descending' else '',
+        'date_ascending_checked': 'checked' if sorting_order == 'date_ascending' else '',
+        'date_descending_checked': 'checked' if sorting_order == 'date_descending' else '',
+        'vote_ascending_checked': 'checked' if sorting_order == 'vote_ascending' else '',
+        'vote_descending_checked': 'checked' if sorting_order == 'vote_descending' else '',
         'to_do_checked': 'checked' if ticket_status == 'T' else '',
         'doing_checked': 'checked' if ticket_status == 'D' else '',
         'completed_checked': 'checked' if ticket_status == 'C' else '',
@@ -71,9 +75,9 @@ def bugs_list(request):
 
 def features_list(request):
     feature = Q(ticket_type="feature")
-    features_all = Ticket.objects.filter(feature).annotate(payments_sum=Sum('payment'))
+    features_all = Ticket.objects.filter(feature).annotate(payments_sum=Sum('payment__payment_value'))
     
-    sorting_order = request.POST['date'] if request.method == "POST" else 'ascending'
+    sorting_order = request.POST['date'] if request.method == "POST" else 'date_ascending'
     ticket_status = request.POST.getlist('status') if request.method == "POST" else ''
 
     sorted_features_list = sort_list(features_all, sorting_order)
@@ -81,8 +85,8 @@ def features_list(request):
         
     context = {
         'features_list': filtered_features_list,
-        'ascending_checked': 'checked' if sorting_order == 'ascending' else '',
-        'descending_checked': 'checked' if sorting_order == 'descending' else '',
+        'date_ascending_checked': 'checked' if sorting_order == 'date_ascending' else '',
+        'date_descending_checked': 'checked' if sorting_order == 'date_descending' else '',
     }
     return render(request, "tickets/features_list.html", context)
 

@@ -24,11 +24,16 @@
                       </div>
                 </fieldset>
                 <fieldset>
-                    <legend>Sorting by date:</legend>
+                    <legend>Sorting by votes count</legend>
                     <label for="ascending">ascending</label>
-                    <input type="radio" name="date" id="ascending" value="ascending" {{ascending_checked}} />
+                    <input type="radio" name="date" id="vote_ascending" value="vote_ascending" {{vote_ascending_checked}}/>
                     <label for="descending">descending</label>
-                    <input type="radio" name="date" id="descending" value="descending" {{descending_checked}} />
+                    <input type="radio" name="date" id="vote_descending" value="vote_descending" {{vote_descending_checked}}/>
+                    <legend>Sorting by date:</legend>
+                    <label for="date ascending">ascending</label>
+                    <input type="radio" name="date" id="date_ascending" value="date_ascending" {{date_ascending_checked}} />
+                    <label for="date descending">descending</label>
+                    <input type="radio" name="date" id="date_descending" value="date_descending" {{date_descending_checked}} />
                     <input type="submit">
                 </fieldset>
             </form>
