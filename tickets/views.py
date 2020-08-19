@@ -33,6 +33,8 @@ def sort_list(tickets_list, sorting_order):
         'date_ascending': 'created_date',
         'vote_descending': '-total_votes',
         'vote_ascending': 'total_votes',
+        'payments_descending': '-payments_sum',
+        'payments_ascending': 'payments_sum',
         'to do': 'T',
         'doing': 'D',
         'completed': 'C'
@@ -87,6 +89,8 @@ def features_list(request):
         'features_list': filtered_features_list,
         'date_ascending_checked': 'checked' if sorting_order == 'date_ascending' else '',
         'date_descending_checked': 'checked' if sorting_order == 'date_descending' else '',
+        'payments_ascending_checked': 'checked' if sorting_order == 'payments_ascending' else '',
+        'payments_descending_checked': 'checked' if sorting_order == 'payments_descending' else '',
     }
     return render(request, "tickets/features_list.html", context)
 

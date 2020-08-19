@@ -23,6 +23,11 @@
                         <label for="completed">Completed</label>
                       </div>
                 </fieldset>
+                <legend>Sorting by payments sum</legend>
+                <label for="ascending">ascending</label>
+                <input type="radio" name="date" id="payments_ascending" value="payments_ascending" {{payments_ascending_checked}}/>
+                <label for="descending">descending</label>
+                <input type="radio" name="date" id="payments_descending" value="payments_descending" {{payments_descending_checked}}/>
                 <legend>Sorting by date:</legend>
                 <label for="ascending">ascending</label>
                 <input type="radio" name="date" id="date_ascending" value="date_ascending" {{date_ascending_checked}} />
