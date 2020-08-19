@@ -9,7 +9,7 @@
             <form action="" method="POST">
                 {% csrf_token %}
                 <fieldset>
-                    <legend>Select bug status:</legend>
+                    <legend>Select feature status:</legend>
                     <div>
                         <input type="checkbox" id="to-do" name="status" value="T" {{to_do_checked}}>
                         <label for="to-do">To do</label>
@@ -23,10 +23,11 @@
                         <label for="completed">Completed</label>
                       </div>
                 </fieldset>
+                <legend>Sorting by date:</legend>
                 <label for="ascending">ascending</label>
-                <input type="radio" name="date" id="ascending" value="ascending" {{ascending_checked}} />
+                <input type="radio" name="date" id="date_ascending" value="date_ascending" {{date_ascending_checked}} />
                 <label for="descending">descending</label>
-                <input type="radio" name="date" id="descending" value="descending" {{descending_checked}} />
+                <input type="radio" name="date" id="date_descending" value="date_descending" {{date_descending_checked}} />
                 <input type="submit">
             </form>
             {% for feature in features_list %}
@@ -43,7 +44,11 @@
                                         class="far fa-file-alt pr-2"></i>Show details</button></a>
                             <a class="mr-2" href="#"><button class="btn btn-sm btn-danger"><i
                                         class="fas fa-money-bill-alt pr-2"></i>Pay</button></a>
-                            <p class="small mb-0">Amount: 120</p>
+                            {% if feature.payments_sum == None %}
+                            <p class="small mb-0">Amount: € 0</p>
+                            {% else %}
+                            <p class="small mb-0">Amount: € {{ feature.payments_sum }}</p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
