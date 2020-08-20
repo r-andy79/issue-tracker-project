@@ -12,14 +12,14 @@
     <div class="row">
         {% if ticket.ticket_type == "bug" %}
         <div class="col border rounded shadow p-3">
-            <h2>{{ ticket.title }}</h2>
+            <h3>{{ ticket.title }}</h3>
             <hr>
             <p class="small">Author: {{ ticket.ticket_author }} | Type: {{ ticket.get_ticket_type_display }} |
                 Status: {{ ticket.get_ticket_status_display }} | Date created: {{ ticket.created_date }}</p>
             <p>Votes: {{ votes.count }}</p>
             <p>{{ ticket.description }}</p>
             <div class="col d-flex justify-content-end p-0">
-                {% if is_author or is_superuser %}
+                {% if request.user.is_author or request.user.is_superuser %}
                 <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Main page</button></a>
                 <a href="{% url 'delete_ticket' pk=ticket.pk %}"><button
                         class="btn btn-sm btn-danger ml-1"><i class="far fa-times-circle pr-1"></i>Delete</button></a>
@@ -50,7 +50,7 @@
         </div>
         {% else %}
         <div class="col border rounded shadow p-3">
-            <h2>{{ ticket.title }}</h2>
+            <h3>{{ ticket.title }}</h3>
             <hr>
             <p class="small">Author: {{ ticket.ticket_author }} | Type: {{ ticket.get_ticket_type_display }} |
                 Status: {{ ticket.get_ticket_status_display }} | Date created: {{ ticket.created_date }}</p>
@@ -63,7 +63,7 @@
             <p>{{ ticket.description }}</p>
 
             <div class="col d-flex justify-content-end p-0">
-                {% if is_author %}
+                {% if request.user.is_author or request.user.is_superuser %}
                 <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
                 <a href="{% url 'delete_ticket' pk=ticket.pk %}"><button
                         class="btn btn-sm btn-danger ml-1">Delete</button></a>
