@@ -9,7 +9,10 @@ body {
     font-size: 0.875rem;
     font-weight: 500;
 }
+
 /* Navigation -------------------*/
+
+
 .nav-wrapper {
     background: #0af;
 }
@@ -30,9 +33,39 @@ body {
     color: #ccc;
 }
 
+.new-ticket {
+    border-radius: 20px;
+    padding: 8px 15px;
+    background: transparent;
+    border: 2px solid #0af;
+    color: #0af;
+    font-weight: 500;
+    text-transform: uppercase;
+    position: fixed;
+    top: 740px;
+    right: 20px;
+    z-index: 10000;
+    transition: 0.3s;
+}
+
+.new-ticket:hover {
+    background: #0af;
+    color: #fff;
+}
+
 /* Helper classes ---------------*/
-.message-container {
-    background: tomato;
+.success {
+    background: green;
+    color: #fff
+}
+
+.warning {
+    background: red;
+    color: #fff;
+}
+
+.asteriskField {
+    display: none;
 }
 
 /* from Bulma */
