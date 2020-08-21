@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% for ticket in tickets %}
+<p>{{ ticket.id }}</p>
+{% endfor %}
+{% endblock %}
