@@ -1,61 +1,29 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% load static %}
 {% block title %}Tickets{% endblock title %}
 {% block content %}
-<div class="container">
+<div class="container px-sm-0 px-md-3">
     <div class="row my-4 mx-1 border rounded">
-        <div class="col-md-12">
-            <h2 class="p-2">Bugs</h2>
-            <form action="" method="POST">
-                {% csrf_token %}
-                <fieldset>
-                    <legend>Select bug status:</legend>
-                    <div>
-                        <input type="checkbox" id="to-do" name="status" value="T" {{to_do_checked}}>
-                        <label for="to-do">To do</label>
-                      </div>
-                      <div>
-                        <input type="checkbox" id="doing" name="status" value="D" {{doing_checked}}>
-                        <label for="doing">Doing</label>
-                      </div>
-                      <div>
-                        <input type="checkbox" id="completed" name="status" value="C" {{completed_checked}}>
-                        <label for="completed">Completed</label>
-                      </div>
-                </fieldset>
-                <fieldset>
-                    <legend>Sorting by votes count</legend>
-                    <label for="ascending">ascending</label>
-                    <input type="radio" name="date" id="vote_ascending" value="vote_ascending" {{vote_ascending_checked}}/>
-                    <label for="descending">descending</label>
-                    <input type="radio" name="date" id="vote_descending" value="vote_descending" {{vote_descending_checked}}/>
-                    <legend>Sorting by date:</legend>
-                    <label for="date ascending">ascending</label>
-                    <input type="radio" name="date" id="date_ascending" value="date_ascending" {{date_ascending_checked}} />
-                    <label for="date descending">descending</label>
-                    <input type="radio" name="date" id="date_descending" value="date_descending" {{date_descending_checked}} />
-                    <input type="submit">
-                </fieldset>
+        <div class="col-md-12 p-sm-0 p-md-3">
+            <h2 class="py-2">Bugs</h2>
+            <form class="border p-3 mb-3 rounded shadow" action="{% url 'bugs_list' %}" method="GET">
+                {{ form|crispy }}
+                <input type="submit">
             </form>
-            {% for bug in bugs_list %}
-            <div
-                class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static shadow">
-                    <h4>{{ bug.title }}</h3>
-                    <p class="small mb-2">Ticket type: <strong>{{ bug.get_ticket_type_display }}</strong> | Ticket
-                        status: <strong>{{ bug.get_ticket_status_display}}</strong> | Date created:
-                        <strong>{{ bug.created_date }}</strong></p>
-                    <p class="small">Description: {{ bug.description|truncatewords:8 }}</p>
-                    <div class="d-flex flex-row align-items-baseline">
-                        <a class="mr-2" href="{% url 'ticket_detail' pk=bug.pk%}"><button class="btn btn-sm btn-info"><i
-                                    class="far fa-file-alt pr-2"></i>Show details</button></a>
-                        <a class="mr-2" href="#"><button class="btn btn-sm btn-danger"><i
-                                    class="fas fa-vote-yea pr-2"></i>I have this too!</button></a>
-                        <p class="small mb-0">Votes: {{ bug.total_votes }}</p>
-                    </div>
+                {% for bug in bugs_list %}  
+                <div class="card mb-3 shadow w-100">
+                    <h5 class="card-header">{{ bug.title|truncatewords:8 }}</h5>
+                  <div class="card-body">
+                    <p class="small card-text">Status: <strong>{{ bug.get_ticket_status_display}}</strong> | Date created:
+                        <strong>{{ bug.created_date }}</strong> | Votes: <strong>{{ bug.total_votes }}</strong></p>
+                    <p class="small card-text">Description: {{ bug.description|truncatewords:8 }}</p>
+                    <a href="{% url 'ticket_detail' pk=bug.pk%}"><button class="btn btn-sm btn-info float-right"><i
+                        class="far fa-file-alt pr-2"></i>Show details</button></a>
+                  </div>
                 </div>
-            </div>
-            {% empty %}
+                {% empty %}
+            
             <div class="col-md-6">
                 <p>no tickets</p>
             </div>

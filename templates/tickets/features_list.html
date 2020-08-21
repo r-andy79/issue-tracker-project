@@ -5,58 +5,22 @@
 <div class="container">
     <div class="row my-4 mx-1 border rounded">
         <div class="col-md-12">
-            <h2>Features</h2>
-            <form action="" method="POST">
-                {% csrf_token %}
-                <fieldset>
-                    <legend>Select feature status:</legend>
-                    <div>
-                        <input type="checkbox" id="to-do" name="status" value="T" {{to_do_checked}}>
-                        <label for="to-do">To do</label>
-                      </div>
-                      <div>
-                        <input type="checkbox" id="doing" name="status" value="D" {{doing_checked}}>
-                        <label for="doing">Doing</label>
-                      </div>
-                      <div>
-                        <input type="checkbox" id="completed" name="status" value="C" {{completed_checked}}>
-                        <label for="completed">Completed</label>
-                      </div>
-                </fieldset>
-                <legend>Sorting by payments sum</legend>
-                <label for="ascending">ascending</label>
-                <input type="radio" name="date" id="payments_ascending" value="payments_ascending" {{payments_ascending_checked}}/>
-                <label for="descending">descending</label>
-                <input type="radio" name="date" id="payments_descending" value="payments_descending" {{payments_descending_checked}}/>
-                <legend>Sorting by date:</legend>
-                <label for="ascending">ascending</label>
-                <input type="radio" name="date" id="date_ascending" value="date_ascending" {{date_ascending_checked}} />
-                <label for="descending">descending</label>
-                <input type="radio" name="date" id="date_descending" value="date_descending" {{date_descending_checked}} />
+            <h2 class="py-2">Features</h2>
+            <form class="border p-3 mb-3 rounded" action="" method="GET">
+                {{ form.as_p }}
                 <input type="submit">
             </form>
             {% for feature in features_list %}
-            <div
-                    class="row no-gutters border rounded overflow-hiddem flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <div class="col p-4 d-flex flex-column position-static shadow">
-                        <h4>{{ feature.title }}</h3>
-                        <p class="small mb-2">Ticket type: <strong>{{ feature.get_ticket_type_display }}</strong> |
-                            Ticket status: <strong>{{ feature.get_ticket_status_display}}</strong> | Date created:
-                            <strong>{{ feature.created_date }}</strong></p>
-                        <p class="small">Description: {{ feature.description|truncatewords:8 }}</p>
-                        <div class="d-flex flex-row align-items-baseline">
-                            <a class="mr-2" href="{% url 'ticket_detail' pk=feature.pk%}"><button class="btn btn-sm btn-info"><i
-                                        class="far fa-file-alt pr-2"></i>Show details</button></a>
-                            <a class="mr-2" href="#"><button class="btn btn-sm btn-danger"><i
-                                        class="fas fa-money-bill-alt pr-2"></i>Pay</button></a>
-                            {% if feature.payments_sum == None %}
-                            <p class="small mb-0">Amount: € 0</p>
-                            {% else %}
-                            <p class="small mb-0">Amount: € {{ feature.payments_sum }}</p>
-                            {% endif %}
-                        </div>
+                    <div class="card mb-3 shadow">
+                        <h5 class="card-header">{{ feature.title|truncatewords:3 }}</h5>
+                      <div class="card-body">
+                        <p class="small card-text">Status: <strong>{{ feature.get_ticket_status_display}}</strong> | Date created:
+                            <strong>{{ feature.created_date }}</strong> | Payments: <strong>{% if feature.payments_sum == None %} €0.00 {% else %} €{{ feature.payments_sum|floatformat:2 }}{% endif %}</strong></p>
+                        <p class="small card-text">Description: {{ feature.description|truncatewords:8 }}</p>
+                        <a href="{% url 'ticket_detail' pk=feature.pk%}"><button class="btn btn-sm btn-info"><i
+                            class="far fa-file-alt pr-2"></i>Show details</button></a>
+                      </div>
                     </div>
-                </div>
                 {% empty %}
                 <div class="col-md-6">
                     <p>no tickets</p>
