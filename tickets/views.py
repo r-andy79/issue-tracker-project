@@ -13,6 +13,7 @@ from .forms import TicketForm, CommentForm, PaymentForm, SearchBugForm, SearchFe
 from crispy_forms.helper import FormHelper
 from django.http import HttpResponseForbidden, JsonResponse
 import stripe
+from . import queries as qs
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -27,47 +28,9 @@ def tickets_list(request):
     }
     return render(request, "tickets/tickets_list.html", context)
 
-def sort_list(tickets_list, sorting_order):
-    order_map = { 
-        'date_descending': '-created_date', 
-        'date_ascending': 'created_date',
-        'vote_descending': '-total_votes',
-        'vote_ascending': 'total_votes',
-        'payments_descending': '-payments_sum',
-        'payments_ascending': 'payments_sum',
-        }
-    sorted_tickets_list = tickets_list.order_by(order_map[sorting_order])
-    return sorted_tickets_list
-
-def filter_list(tickets_list, request):
-    q_objects = Q()
-    statuses = request.POST.getlist('status')
-    for status in statuses:
-        q_objects |= Q(ticket_status__contains=status)
-    filtered_tickets_list = tickets_list.filter(q_objects)
-    return filtered_tickets_list
-
-def make_bugs_query(ticket_type, text=None, sorting_order=None, statuses=None):
-    bugs_query = (
-        Ticket.objects
-        .filter(ticket_type=ticket_type)
-        .annotate(total_votes=Count('vote'))
-    )
-
-    if text:
-        bugs_query = bugs_query.filter(title__icontains=text)
-
-    if sorting_order:
-        bugs_query = tickets_order_by(bugs_query, sorting_order=sorting_order)
-    
-    if statuses:
-        bugs_query = ticket_filter_by_statuses(bugs_query, statuses)
-    
-    return bugs_query
-
         
 def _bugs_list_default(request):
-    bugs = list(make_bugs_query(
+    bugs = list(qs.make_bugs_query(
         ticket_type='bug', 
         sorting_order='vote_descending'
     ))
@@ -77,7 +40,7 @@ def _bugs_list_default(request):
     })
         
 def _bugs_list_invalid(request, form):
-    bugs = list(make_bugs_query(
+    bugs = list(qs.make_bugs_query(
         ticket_type='bug', 
         sorting_order=form.get_sorting_order()
     ))
@@ -88,7 +51,7 @@ def _bugs_list_invalid(request, form):
     
         
 def _bugs_list_valid(request, form):
-    bugs = list(make_bugs_query(
+    bugs = list(qs.make_bugs_query(
         ticket_type='bug',
         text=form.cleaned_data['text'],
         sorting_order=form.get_sorting_order(),
@@ -99,23 +62,7 @@ def _bugs_list_valid(request, form):
         'bugs_list': bugs,
     })
         
-def ticket_filter_by_statuses(query, statuses):
-    q_objects = Q()
-    for status in statuses:
-        q_objects |= Q(ticket_status__contains=status)
-    return query.filter(q_objects)
-  
 
-def tickets_order_by(query, sorting_order):
-    order_map = { 
-        'date_descending': '-created_date', 
-        'date_ascending': 'created_date',
-        'vote_descending': '-total_votes',
-        'vote_ascending': 'total_votes',
-        'payments_sum_descending': '-payments_sum',
-        'payments_sum_ascending': 'payments_sum',
-    }
-    return query.order_by(order_map[sorting_order])
 
 
 def bugs_list(request):
@@ -128,51 +75,12 @@ def bugs_list(request):
         else:
             return _bugs_list_invalid(request, form)
 
-    bug = Q(ticket_type="bug")
-    bugs_all = Ticket.objects.filter(bug).annotate(total_votes=Count('vote'))
-    
-    sorting_order = request.POST['date'] if request.method == "POST" else 'date_ascending'
-    ticket_status = request.POST.getlist('status') if request.method == "POST" else ''
-    sorted_bugs_list = sort_list(bugs_all, sorting_order)
-    filtered_bugs_list = filter_list(sorted_bugs_list, request)
 
-    form = SearchBugForm()
-
-    context = {
-        'form': form,
-        'bugs_list': filtered_bugs_list,
-        'date_ascending_checked': 'checked' if sorting_order == 'date_ascending' else '',
-        'date_descending_checked': 'checked' if sorting_order == 'date_descending' else '',
-        'vote_ascending_checked': 'checked' if sorting_order == 'vote_ascending' else '',
-        'vote_descending_checked': 'checked' if sorting_order == 'vote_descending' else '',
-        'to_do_checked': 'checked' if ticket_status == 'T' else '',
-        'doing_checked': 'checked' if ticket_status == 'D' else '',
-        'completed_checked': 'checked' if ticket_status == 'C' else '',
-    }
-    return render(request, "tickets/bugs_list.html", context)
-
-def make_features_query(ticket_type, text=None, sorting_order=None, statuses=None):
-    features_query = (
-        Ticket.objects
-        .filter(ticket_type=ticket_type)
-        .annotate(payments_sum=Sum('payment__payment_value'))
-    )
-
-    if text:
-        features_query = features_query.filter(title__icontains=text)
-
-    if sorting_order:
-        features_query = tickets_order_by(features_query, sorting_order=sorting_order)
-    
-    if statuses:
-        features_query = ticket_filter_by_statuses(features_query, statuses)
-    
-    return features_query
 
 def _features_list_default(request):
-    features = list(make_features_query(
+    features = list(qs.make_features_query(
         ticket_type='feature', 
-        sorting_order='payments_sum_descending'
+        sorting_order='payment_sum_descending'
     ))
     return render(request, "tickets/features_list.html", {
         'form': SearchFeatureForm(),
@@ -180,7 +88,7 @@ def _features_list_default(request):
     })
         
 def _features_list_invalid(request, form):
-    featuress = list(make_features_query(
+    featuress = list(qs.make_features_query(
         ticket_type='feature', 
         sorting_order=form.get_sorting_order()
     ))
@@ -191,7 +99,7 @@ def _features_list_invalid(request, form):
     
         
 def _features_list_valid(request, form):
-    features = list(make_features_query(
+    features = list(qs.make_features_query(
         ticket_type='feature',
         text=form.cleaned_data['text'],
         sorting_order=form.get_sorting_order(),
@@ -211,25 +119,6 @@ def features_list(request):
             return _features_list_valid(request, form)
         else:
             return _features_list_invalid(request, form)
-
-    feature = Q(ticket_type="feature")
-    features_all = Ticket.objects.filter(feature).annotate(payments_sum=Sum('payment__payment_value'))
-    
-    sorting_order = request.POST['date'] if request.method == "POST" else 'date_ascending'
-    ticket_status = request.POST.getlist('status') if request.method == "POST" else ''
-
-    sorted_features_list = sort_list(features_all, sorting_order)
-    filtered_features_list = filter_list(sorted_features_list, request)
-        
-    context = {
-        'form': form,
-        'features_list': filtered_features_list,
-        'date_ascending_checked': 'checked' if sorting_order == 'date_ascending' else '',
-        'date_descending_checked': 'checked' if sorting_order == 'date_descending' else '',
-        'payments_ascending_checked': 'checked' if sorting_order == 'payments_ascending' else '',
-        'payments_descending_checked': 'checked' if sorting_order == 'payments_descending' else '',
-    }
-    return render(request, "tickets/features_list.html", context)
 
 def ticket_detail(request, pk):
     if request.user.is_authenticated:
@@ -347,7 +236,9 @@ def pay(request, pk):
                 #idempotency_key=
             )
             form.save()
-            return redirect(reverse('success', args=[form.instance.payment_value]))
+            amount = form.instance.payment_value
+            messages.success(request, f'Thank you for your payment of %a euro' %amount)
+            return redirect(reverse('ticket_detail', args=[pk]))
     else:
         # 1. odpala się tylko przy pierwszym wejściu na stronę
         form = PaymentForm()
@@ -358,16 +249,8 @@ def pay(request, pk):
     }
     return render(request, "tickets/payment.html", context) # redirect do success
 
-def charge(request):
-    return redirect(reverse('success', args=[amount]))
-
 @csrf_exempt
 def stripe_config(request):
     if request.method == 'GET':
         stripe_config = {'publicKey': settings.STRIPE_PUBLISHABLE_KEY}
         return JsonResponse(stripe_config, safe=False)
-
-def successMsg(request, args):
-    amount = args
-    messages.success(request, f'Thank you for your payment of %a euro' %amount)
-    return render(request, 'tickets/success.html', {'amount': amount})
