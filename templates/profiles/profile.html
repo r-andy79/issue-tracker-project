@@ -34,10 +34,23 @@
                   </tr>
                   {% endfor %}
                 </tbody>
-              </table>
+            </table>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Ticket title</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for vote in votes %}
+                  <tr>
+                    <td>{{ vote.ticket }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
-
 
 {% endblock %}
