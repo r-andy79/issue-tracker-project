@@ -46,12 +46,12 @@ class Payment(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.PROTECT)
     date = models.DateTimeField(auto_now=True)
     PAYMENT_VALUES = [
-        ('1', '1'),
-        ('2', '2'),
-        ('5', '5'),
-        ('10', '10')
+        (1, '1'),
+        (2, '2'),
+        (5, '5'),
+        (10, '10')
     ]
-    payment_value = models.CharField(max_length=10, choices=PAYMENT_VALUES)
+    payment_value = models.IntegerField(choices=PAYMENT_VALUES)
 
     def __str__(self):
         return str(self.user) + ":" + str(self.ticket) + " " + str(self.date) + " " + str(self.payment_value)
