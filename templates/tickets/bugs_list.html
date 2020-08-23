@@ -9,7 +9,7 @@
             <h2 class="py-2">Bugs</h2>
             <form class="border p-3 mb-3 rounded shadow" action="{% url 'bugs_list' %}" method="GET">
                 {{ form|crispy }}
-                <input type="submit">
+                <button class="btn btn-sm btn-info" type="submit">Submit</button>
             </form>
                 {% for bug in bugs_list %}  
                 <div class="card mb-3 shadow w-100">
@@ -29,4 +29,6 @@
             </div>
             {% endfor %}
         </div>
-        {% endblock %}
+    </div>
+</div>
+{% endblock %}
