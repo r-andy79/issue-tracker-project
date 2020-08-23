@@ -1,6 +1,7 @@
 # Issue Tracker Application
 ## 4th Milestone Project - Full Stack Frameworks with Django - Code Institute
-
+This is my Issue Tracker project ... as a 4th Milestone Project. The purpose of the application is to keep track of users queries / tickets ...
+User can
 ## UX
 ## User Stories
 ### Guest
@@ -25,10 +26,22 @@ As a logged in user:
 
 ### Administrator / Developer
 As an administrator / developr:
-* I want to be able to update the ticket status
+* I want to be able to update the ticket status, to give user a feedback on a progress
 
 ## Features
+Application allows users to create two type of tickets: bugs and features. 
+
 ## Technologies Used
+Django
+Jinja2
+HTML
+CSS
+JavaScript
+Bootstrap
 ## Testing
+## Installation
+To run the appliaction on your local machine please please create a virtual environment using command python3 -m venv /path/to/new/virtual/environment. Once created you can clone the repo: git clone https://github.com/r-andy79/issue-tracker-project.git. 
+Run pip3 install -r requirements.txt 
+apply the migrations
 ## Deployment
 ## Acknowledgements
