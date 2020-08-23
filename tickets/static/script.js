@@ -3,6 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if(msgContainer) {
         setTimeout(() => {
             msgContainer.style.display = "none"
-        }, 3000);
+        }, 5000);
     }
 })
