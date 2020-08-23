@@ -34,7 +34,6 @@ class SearchBugForm(forms.Form):
     
     date_sort = forms.ChoiceField(
         choices=DATE_SORT_CHOICES, 
-        # widget=forms.CheckboxSelectMultiple(),
         required=False
     )
     
@@ -46,7 +45,6 @@ class SearchBugForm(forms.Form):
     
     vote_sort = forms.ChoiceField(
         choices=VOTE_SORT_CHOICES,
-        # widget=forms.(),
         required=False
     )
 
@@ -80,28 +78,26 @@ class SearchFeatureForm(forms.Form):
     
     date_sort = forms.ChoiceField(
         choices=DATE_SORT_CHOICES, 
-        # widget=forms.CheckboxSelectMultiple(),
         required=False
     )
     
     PAYMENT_SUM_SORT_CHOICES = (
         ('', '------'),
-        ('H', 'highest'),
-        ('L', 'lowest'),
+        ('H', 'ascending'),
+        ('L', 'descending'),
     )
     
     payment_sum_sort = forms.ChoiceField(
         choices=PAYMENT_SUM_SORT_CHOICES,
-        # widget=forms.(),
         required=False
     )
 
     def get_sorting_order(self):
         payment_sum_sort = self.cleaned_data['payment_sum_sort']
         if payment_sum_sort == 'H':
-            return 'payments_sum_descending'
+            return 'payment_sum_descending'
         elif payment_sum_sort == 'L':
-            return 'payments_sum_ascending'
+            return 'payment_sum_ascending'
         
         date_sort = self.cleaned_data['date_sort']
         if date_sort == 'N':

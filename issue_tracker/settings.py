@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '0d-ylxds1rx0r*enkl_e+r1ycu_3#=3^v-mp37@c51l=g(mc%5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'T') == 'T'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -113,8 +113,14 @@ WSGI_APPLICATION = 'issue_tracker.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('TRACKER_DB_NAME', 'tracker'),
+        'USER': 'tracker',
+        'PASSWORD': 'tracker',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -162,4 +168,4 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STRIPE_PUBLISHABLE_KEY = 'pk_test_ykHKKk7JmbysFSB192veebsA00rCY6IypV'
-STRIPE_SECRET_KEY = os.environ.get('STRIPE_API_KEY')
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_API_KEY', )
