@@ -12,7 +12,5 @@ urlpatterns = [
     path('ticket/new/', views.ticket_new, name='ticket_new'),
     path('ticket/<int:ticket_id>/user/<int:user_id>/vote', views.ticket_vote, name='ticket_vote'),
     path('ticket/<int:pk>/pay/', views.pay, name='pay'),
-    path('charge/', views.charge, name="charge"),
-    path('success/<str:args>/', views.successMsg, name='success'),
     path('config/', views.stripe_config),
 ]
