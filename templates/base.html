@@ -18,6 +18,9 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% endblock %}
 
+    {% block extra_head %}
+    {% endblock %}
+
     {% block extra_css %}
     {% endblock %}
     
@@ -32,13 +35,13 @@
     <script src="{% static 'script.js' %}"></script>
     {% endblock %}
 
-    <title>Issue Tracker {% block extra_title %}{% endblock %}</title>
+    <title>Issue Tracker {% block extra_title %}{% endblock %}{% block head_title %}{% endblock %}</title>
     
   </head>
   <body>
       <div class="container-fluid nav-wrapper shadow">
       <header class="container">
-        <nav class="navbar navbar-light navbar-expand-lg w-100" style="background-color: #0af;">
+        <nav class="navbar navbar-dark navbar-expand-lg w-100" style="background-color: #0af;">
             <a class="navbar-brand logo-font" href="{% url 'tickets_list' %}">Issue Tracker</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -61,7 +64,7 @@
                     <a class="nav-link" href="{% url 'features_list' %}">Features</a>
                   </li>  
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'profile_view' user_id=user.id %}">User Profile</a>
+                    <a class="nav-link" href="{% url 'profile_view' %}">User Profile</a>
                   </li> 
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
@@ -82,7 +85,7 @@
       {% if messages %}
       <div class="message-container">
         {% for message in messages %}
-        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+        <p{% if message.tags %} class="message-text {{ message.tags }}"{% endif %}>{{ message }}</p>
         {% endfor %}
       </div>
       {% endif %}
@@ -93,11 +96,13 @@
       {% block page_header %}
       {% endblock %}
 
-
       {% block content %}
       {% endblock %}
 
       {% block postloadjs %}
+      {% endblock %}
+
+      {% block extra_body %}
       {% endblock %}
   </body>
 </html>
