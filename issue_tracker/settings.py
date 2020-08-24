@@ -170,4 +170,4 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STRIPE_PUBLISHABLE_KEY = 'pk_test_ykHKKk7JmbysFSB192veebsA00rCY6IypV'
-STRIPE_SECRET_KEY = os.environ.get('TRACKER_STRIPE_API_KEY', )
+STRIPE_SECRET_KEY = os.environ.get('TRACKER_STRIPE_API_KEY')
