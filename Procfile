@@ -1,2 +1,2 @@
 web: gunicorn issue_tracker.wsgi
-setup: ./bin/setup.sh
+release: ./bin/setup.sh
