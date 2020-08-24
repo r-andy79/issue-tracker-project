@@ -44,6 +44,7 @@ class SearchBugForm(forms.Form):
     )
     
     vote_sort = forms.ChoiceField(
+        label="Sort by vote count",
         choices=VOTE_SORT_CHOICES,
         required=False
     )

@@ -13,11 +13,12 @@
     <div class="container">
         <div class="row">
             <div class="col border rounded shadow p-3">
+                <h2>New ticket</h2>
                 <form method="POST">
                     {% csrf_token %}
                     {{ form|crispy }}
                     <div class="col d-flex justify-content-center p-0">
-                        <button class="btn btn-success justify-content-end" type="submit">Save</button>
+                        <button class="btn btn-success justify-content-end" type="submit">Create ticket</button>
                     </div>
                 </form>
             </div>

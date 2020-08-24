@@ -19,7 +19,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 def tickets_list(request):
-    """Displays the five latest tickets on the main site of the application"""
+    """Displays five latest tickets on the main site of the application"""
     bugs_list_short = Ticket.objects.filter(ticket_type="bug").annotate(total_votes=Count("vote")).order_by('-created_date')[:5]
     features_list_short = Ticket.objects.filter(ticket_type="feature").annotate(payments_sum=Sum("payment__payment_value")).order_by('-created_date')[:5]
     context = {
@@ -62,8 +62,6 @@ def _bugs_list_valid(request, form):
         'bugs_list': bugs,
     })
         
-
-
 
 def bugs_list(request):
     if len(request.GET) == 0:
@@ -121,11 +119,7 @@ def features_list(request):
             return _features_list_invalid(request, form)
 
 def ticket_detail(request, pk):
-    if request.user.is_authenticated:
-        print('zalogowany')
-    else:
-        print('niezalogowany')
-
+    """Function responsible for display detailed view of a ticket"""
     ticket = get_object_or_404(Ticket, pk=pk)
     votes = Vote.objects.filter(ticket_id=pk)
     payments_sum = Payment.objects.filter(ticket_id=pk).aggregate(Sum('payment_value'))
@@ -231,21 +225,18 @@ def pay(request, pk):
                 amount = form.instance.cents_amount(),
                 currency  = 'eur',
                 description = 'Donation',
-                #idempotency_key=
             )
             form.save()
             amount = form.instance.payment_value
             messages.success(request, f'Thank you for your payment of %a euro' %amount)
             return redirect(reverse('ticket_detail', args=[pk]))
     else:
-        # 1. odpala się tylko przy pierwszym wejściu na stronę
         form = PaymentForm()
     context = {
-        'form': form, # gdy mamy POST to tutaj wpada form = PaymentForm(request.POST)
-                      # gdy mamy GET wtedy wpada form = PaymentForm()
+        'form': form, 
         'ticket': ticket
     }
-    return render(request, "tickets/payment.html", context) # redirect do success
+    return render(request, "tickets/payment.html", context)
 
 @csrf_exempt
 def stripe_config(request):
