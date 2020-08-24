@@ -164,7 +164,6 @@ def ticket_new(request):
 @login_required(login_url='account_login')
 def edit_ticket(request, pk):
     ticket = get_object_or_404(Ticket, pk=pk)
-    # rozpoznanie czy użytkownik jest autorem ticketa (403 albo 406)
     if request.method == "POST":
         form = TicketForm(request.POST, instance=ticket)
         if form.is_valid():
@@ -178,7 +177,6 @@ def edit_ticket(request, pk):
 
 @login_required(login_url='account_login')
 def delete_ticket(request, pk):
-    #autor albo deweloperzy
     ticket = get_object_or_404(Ticket, pk=pk)
     ticket.delete()
     return redirect('tickets_list')

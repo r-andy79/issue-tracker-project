@@ -119,12 +119,18 @@ function stripeTokenHandler(token) {
 {% block content %}
 
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <form action="{% url 'pay' ticket.id %}" method="post" id="payment-form">
+    <div class="row border rounded mx-1">
+        <div class="col-md-6 p-3">
+            <h3>Ticket details:</h3>
+            <p>title: <strong>{{ ticket.title }}</strong></p>
+            <p>date: <strong>{{ ticket.created_date }}</strong></p>
+            <p>description: <strong>{{ ticket.description|truncatewords:5 }}</strong></p>
+        </div>
+        <div class="col-md-6 p-3">
+            <form class="p-1" action="{% url 'pay' ticket.id %}" method="post" id="payment-form">
                 {% csrf_token %}
                 <div class="form-row">
-                  <label for="card-element">
+                  <label for="card-element py-1">
                     Credit or debit card
                   </label>
                   <div id="card-element">
@@ -136,7 +142,7 @@ function stripeTokenHandler(token) {
                 </div>
                 {{ form|crispy }}
               
-                <button>Submit Payment</button>
+                <button class="btn btn-sm btn-success">Submit Payment</button>
               </form>
         </div>
     </div>
