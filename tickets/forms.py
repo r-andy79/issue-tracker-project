@@ -83,8 +83,8 @@ class SearchFeatureForm(forms.Form):
     
     PAYMENT_SUM_SORT_CHOICES = (
         ('', '------'),
-        ('H', 'ascending'),
-        ('L', 'descending'),
+        ('H', 'descending'),
+        ('L', 'ascending'),
     )
     
     payment_sum_sort = forms.ChoiceField(
