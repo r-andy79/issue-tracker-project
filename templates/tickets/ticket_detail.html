@@ -63,12 +63,10 @@
             <div class="col d-flex justify-content-end p-0">
                 {% if request.user.is_author or request.user.is_superuser %}
                 <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
-                <a href="{% url 'delete_ticket' pk=ticket.pk %}"><button
-                        class="btn btn-sm btn-danger ml-1">Delete</button></a>
                 <a href="{% url 'edit_ticket' pk=ticket.pk %}"><button
                         class="btn btn-sm btn-success ml-1"><i class="far fa-edit"></i>Edit</button></a>
                 <a href="{% url 'add_comment' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Comment</button></a>
-                <a href="#"><button class="btn btn-sm btn-warning ml-1">Pay</button></a>
+                <a href="{% url 'pay' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Pay</button></a>
                 {% elif is_user %}
                 <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Back to main page</button></a>
                 <a href="{% url 'add_comment' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Add
