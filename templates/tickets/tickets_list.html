@@ -20,8 +20,8 @@
                     </div>
                   </div>
             {% empty %}
-            <div class="col-md-12 col-lg-6">
-                <h3>no tickets</h3>
+            <div class="col-md-12">
+                <p class="text-center">no tickets</p>
             </div>
             {% endfor %}
             {% if bugs_list_short.count > 5 %}
@@ -44,8 +44,8 @@
                     </div>
                   </div>
             {% empty %}
-            <div class="col-md-12 col-lg-6">
-                <h3>no tickets</h3>
+            <div class="col-md-12">
+                <p class="text-center">no tickets</p>
             </div>
             {% endfor %}
             {% if features_list_short.count > 5 %}
@@ -54,57 +54,4 @@
         </div>
     </div>
 </div>
-<!-- <div class="container mx-auto">
-    <div class="row my-4 border rounded mx-1">
-        <div class="col-md-12 col-lg-6">
-            <h3 class="text-center my-3">Bugs</h3>
-            {% for bug in bugs_list_short %}
-                <div class="col md-6 p-0">
-                    <div class="card mb-3 shadow">
-                        <h5 class="card-header">{{ bug.title|truncatewords:3 }}</h5>
-                      <div class="card-body">
-                        <p class="small card-text">Status: <strong>{{ bug.get_ticket_status_display}}</strong> | Date created:
-                            <strong>{{ bug.created_date }}</strong> | Votes: <strong>{{ bug.total_votes }}</strong></p>
-                        <p class="small card-text">Description: {{ bug.description|truncatewords:8 }}</p>
-                        <a href="{% url 'ticket_detail' pk=bug.pk%}"><button class="btn btn-sm btn-info"><i
-                            class="far fa-file-alt pr-2"></i>Show details</button></a>
-                      </div>
-                    </div>
-                  </div>
-            {% empty %}
-            <div class="col-md-12 col-lg-6">
-                <h3>no tickets</h3>
-            </div>
-            {% endfor %}
-            {% if bugs_list_short.count > 5 %}
-            <a class="d-block mb-3 text-right" href="{% url 'bugs_list' %}">Show more</a>
-            {% endif %}
-        </div>
-        <div class="col-md-12 col-lg-6">
-            <h3 class="text-center my-3">Features</h3>
-            {% for feature in features_list_short %}
-                <div class="col-md-6 p-0">
-                    <div class="card mb-3 shadow">
-                        <h5 class="card-header">{{ feature.title|truncatewords:3 }}</h5>
-                      <div class="card-body">
-                        <p class="small card-text">Status: <strong>{{ feature.get_ticket_status_display}}</strong> | Date created:
-                            <strong>{{ feature.created_date }}</strong> | Sum: {% if feature.payments_sum == None %} €0.00 {% else %} €{{ feature.payments_sum|floatformat:2 }}{% endif %}</strong></p>
-                        <p class="small card-text">Description: {{ feature.description|truncatewords:8 }}</p>
-                        <a href="{% url 'ticket_detail' pk=feature.pk%}"><button class="btn btn-sm btn-info"><i
-                            class="far fa-file-alt pr-2"></i>Show details</button></a>
-                      </div>
-                    </div>
-                </div>
-
-                {% empty %}
-                <div class="col-md-12 col-lg-6">
-                    <h3>no tickets</h3>
-                </div>
-                {% endfor %}
-                {% if features_list_short.count > 5 %}
-                <a class="d-block mb-3 mr-1 text-right" href="{% url 'features_list' %}">Show more</a>
-                {% endif %}
-            </div>
-        </div>
-    </div> -->
 {% endblock %}

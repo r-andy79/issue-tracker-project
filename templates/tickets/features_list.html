@@ -4,7 +4,7 @@
 {% block title %}Tickets{% endblock title %}
 {% block content %}
 <div class="container px-0 px-md-3">
-    <div class="row my-1 my-md-2 mx-1 border rounded">
+    <div class="row my-4 mx-1 border rounded">
         <div class="col-md-12 p-sm-0 p-md-3">
             <h2 class="py-2">Features</h2>
             <form class="border p-3 mb-3 rounded shadow" action="" method="GET">
@@ -18,7 +18,7 @@
                         <p class="small card-text">Status: <strong>{{ feature.get_ticket_status_display}}</strong> | Date created:
                             <strong>{{ feature.created_date }}</strong> | Payments: <strong>{% if feature.payments_sum == None %} €0.00 {% else %} €{{ feature.payments_sum|floatformat:2 }}{% endif %}</strong></p>
                         <p class="small card-text">Description: {{ feature.description|truncatewords:8 }}</p>
-                        <a href="{% url 'ticket_detail' pk=feature.pk%}"><button class="btn btn-sm btn-info"><i
+                        <a href="{% url 'ticket_detail' pk=feature.pk%}"><button class="btn btn-sm btn-info float-right"><i
                             class="far fa-file-alt pr-2"></i>Show details</button></a>
                       </div>
                     </div>

@@ -21,13 +21,11 @@
             <div class="col d-flex justify-content-end p-0">
                 {% if request.user.is_author or request.user.is_superuser %}
                 <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Main page</button></a>
-                <a href="{% url 'delete_ticket' pk=ticket.pk %}"><button
-                        class="btn btn-sm ml-1 btn-danger"><i class="far fa-times-circle pr-1"></i>Delete</button></a>
                 <a href="{% url 'edit_ticket' pk=ticket.pk %}"><button
-                        class="btn btn-sm btn-success ml-1"><i class="far fa-edit pr-1"></i>Edit</button></a>
+                        class="btn btn-sm btn-success ml-1">Edit</button></a>
                 <a href="{% url 'add_comment' pk=ticket.pk %}"><button class="btn btn-sm ml-1 btn-success">Comment</button></a>
                 <a href="{% url 'ticket_vote' ticket_id=ticket.pk user_id=user.id %}"><button
-                        class="btn btn-sm btn-danger ml-1"><i class="fas fa-vote-yea pr-1 d-none d-sm-block"></i>Vote</button></a>
+                        class="btn btn-sm btn-danger ml-1">Vote</button></a>
                 {% elif is_user %}
                 <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Main page</button></a>
                 <a href="{% url 'add_comment' pk=ticket.pk %}"><button class="btn btn-sm btn-warning ml-1">Add
