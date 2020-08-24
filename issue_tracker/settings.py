@@ -20,10 +20,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '0d-ylxds1rx0r*enkl_e+r1ycu_3#=3^v-mp37@c51l=g(mc%5'
+SECRET_KEY = os.environ.get('TRACKER_SECRET_KEY', '0d-ylxds1rx0r*enkl_e+r1ycu_3#=3^v-mp37@c51l=g(mc%5')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'T') == 'T'
+DEBUG = os.environ.get('TRACKER_DEBUG', 'T') == 'T'
 
 ALLOWED_HOSTS = ['*']
 
@@ -116,11 +116,13 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.postgresql',
+        # get działa jak if: jeśli mamy zmienną TRACKER_DB_NAME to właśnie ona zostanie użyta
+        # w przeciwnym razie zostanie użyta wartość 'tracker'
         'NAME': os.environ.get('TRACKER_DB_NAME', 'tracker'),
-        'USER': 'tracker',
-        'PASSWORD': 'tracker',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'USER': os.environ.get('TRACKER_DB_USER', 'tracker'),
+        'PASSWORD': os.environ.get('TRACKER_DB_PASSWORD', 'tracker'),
+        'HOST': os.environ.get('TRACKER_DB_HOST', '127.0.0.1'),
+        'PORT': os.environ.get('TRACKER_DB_PORT', '5432'),
     }
 }
 
@@ -168,4 +170,4 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STRIPE_PUBLISHABLE_KEY = 'pk_test_ykHKKk7JmbysFSB192veebsA00rCY6IypV'
-STRIPE_SECRET_KEY = os.environ.get('STRIPE_API_KEY', )
+STRIPE_SECRET_KEY = os.environ.get('TRACKER_STRIPE_API_KEY', )
