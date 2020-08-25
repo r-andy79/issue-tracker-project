@@ -33,14 +33,15 @@ class SearchBugForm(forms.Form):
     )
     
     date_sort = forms.ChoiceField(
+        label="Sort by creation date",
         choices=DATE_SORT_CHOICES, 
         required=False
     )
     
     VOTE_SORT_CHOICES = (
         ('', '------'),
-        ('P', 'popular'),
-        ('U', 'unpopular'),
+        ('P', 'highest voted'),
+        ('U', 'least voted'),
     )
     
     vote_sort = forms.ChoiceField(
@@ -78,6 +79,7 @@ class SearchFeatureForm(forms.Form):
     )
     
     date_sort = forms.ChoiceField(
+        label="Sort by creation date",
         choices=DATE_SORT_CHOICES, 
         required=False
     )
@@ -89,6 +91,7 @@ class SearchFeatureForm(forms.Form):
     )
     
     payment_sum_sort = forms.ChoiceField(
+        label="Sort by contributed payments value",
         choices=PAYMENT_SUM_SORT_CHOICES,
         required=False
     )
