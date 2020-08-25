@@ -8,7 +8,7 @@ from django.db.models import Q, Sum, Count
 from django.db import IntegrityError
 from django.utils import timezone
 from django.core.paginator import Paginator
-from .models import Ticket, Comment, Vote, Payment
+from .models import Ticket, Comment, Vote, Payment, BugTicket, FeatureTicket
 from .forms import TicketForm, CommentForm, PaymentForm, SearchBugForm, SearchFeatureForm
 from crispy_forms.helper import FormHelper
 from django.http import HttpResponseForbidden, JsonResponse
@@ -20,8 +20,8 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def tickets_list(request):
     """Displays five latest tickets on the main site of the application"""
-    bugs_list_short = Ticket.objects.filter(ticket_type="bug").annotate(total_votes=Count("vote")).order_by('-created_date')[:5]
-    features_list_short = Ticket.objects.filter(ticket_type="feature").annotate(payments_sum=Sum("payment__payment_value")).order_by('-created_date')[:5]
+    bugs_list_short = BugTicket.objects.get_queryset_for_user()
+    features_list_short = FeatureTicket.objects.get_queryset_for_user()
     context = {
         'bugs_list_short': bugs_list_short,
         'features_list_short': features_list_short,

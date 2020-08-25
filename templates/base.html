@@ -51,7 +51,7 @@
                 {% if request.user.is_authenticated %}
                     {% if request.user.is_superuser %}
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Tickets management</a>
+                    <a class="nav-link" href="{% url 'admin:app_list' 'tickets'%}">Tickets management</a>
                   </li>  
                   {% endif %}
                   <li class="nav-item">

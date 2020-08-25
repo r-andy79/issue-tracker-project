@@ -7,12 +7,7 @@ class TicketBugAdmin(admin.ModelAdmin):
     list_display=['title', 'total_votes']
 
     def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        return (
-            qs
-            .annotate(total_votes=Count("vote"))
-            .order_by('-total_votes')
-        )
+        return BugTicket.objects.get_queryset_for_admin()
     
     def total_votes(self, ticket):
         return ticket.total_votes
@@ -22,12 +17,7 @@ class TicketFeatureAdmin(admin.ModelAdmin):
     list_display=['title', 'payments_sum']
     
     def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        return (
-            qs
-            .annotate(payments_sum=Sum("payment__payment_value"))
-            .order_by('-payments_sum')
-        )
+        return FeatureTicket.objects.get_queryset_for_admin()
     
     def payments_sum(self, ticket):
         return ticket.payments_sum
