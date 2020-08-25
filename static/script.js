@@ -5,4 +5,12 @@ document.addEventListener('DOMContentLoaded', function() {
             msgContainer.style.display = "none"
         }, 5000);
     }
+
+    const btn = document.querySelector('.new-ticket')
+    btn.addEventListener('mouseover', function() {
+        this.textContent = "new ticket"
+    })
+    btn.addEventListener('mouseout', function() {
+        this.innerHTML = '<i class="fas fa-plus"></i>'
+    })
 })

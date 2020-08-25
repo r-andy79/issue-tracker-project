@@ -35,15 +35,15 @@ body {
 
 .new-ticket {
     border-radius: 20px;
-    padding: 8px 15px;
+    padding: 8px 16px;
     background: transparent;
     border: 2px solid #0af;
     color: #0af;
     font-weight: 500;
     text-transform: uppercase;
     position: fixed;
-    top: 740px;
-    right: 20px;
+    bottom: 60px;
+    right: 60px;
     z-index: 10000;
     transition: 0.3s;
 }
