@@ -4,7 +4,7 @@ from .models import Ticket, Comment, Vote, Payment, BugTicket, FeatureTicket
 
 @admin.register(BugTicket)
 class TicketBugAdmin(admin.ModelAdmin):
-    list_display=['title', 'total_votes']
+    list_display=['title', 'total_votes', 'ticket_author', 'ticket_status', 'created_date']
 
     def get_queryset(self, request):
         return BugTicket.objects.get_queryset_for_admin()
@@ -14,7 +14,7 @@ class TicketBugAdmin(admin.ModelAdmin):
 
 @admin.register(FeatureTicket)
 class TicketFeatureAdmin(admin.ModelAdmin):
-    list_display=['title', 'payments_sum']
+    list_display=['title', 'payments_sum', 'ticket_author', 'ticket_status', 'created_date']
     
     def get_queryset(self, request):
         return FeatureTicket.objects.get_queryset_for_admin()
