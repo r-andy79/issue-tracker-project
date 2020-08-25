@@ -1,7 +1,7 @@
 # Issue Tracker Application
 ## 4th Milestone Project - Full Stack Frameworks with Django - Code Institute
 This is my Issue Tracker project ... as a 4th Milestone Project. The purpose of the application is to keep track of users queries / tickets ...
-User can
+
 ## UX
 ## User Stories
 ### Guest
@@ -29,7 +29,7 @@ As an administrator / developr:
 * I want to be able to update the ticket status, to give user a feedback on a progress
 
 ## Features
-Application allows users to create two type of tickets: bugs and features. 
+Application allows users to create two type of tickets: bugs and features. Bugs should be used to report any issues related to the application and features should be raised whenever a user comes up with a new functionality idea that could be implemented. Users can upvote bugs, if they have the same issue to prioritise fixing it. Features will be developed based on the total amount contributed towards a specific feature.
 
 ## Technologies Used
 Django
