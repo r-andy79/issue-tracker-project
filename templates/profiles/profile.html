@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% block extra_title %}User's profile{% endblock extra_title %}
 {% block page_header %}
 <div class="container header-container">
     <div class="row">
@@ -11,6 +12,7 @@
 <div class="container">
     <div class="row">
         <div class="col border rounded shadow p-3">
+            <h4>User's details</h4>
             <p>User name: {{ user.username }}</p>
             <p>email address: {{ user.email }}</p>
             <hr>
@@ -31,20 +33,6 @@
                     <td><a href="{% url 'ticket_detail' pk=ticket.pk %}">{{ ticket.title }}</a></td>
                     <td>{{ ticket.get_ticket_type_display }}</td>
                     <td>{{ ticket.get_ticket_status_display }}</td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-            </table>
-            <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Ticket title</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    {% for vote in votes %}
-                  <tr>
-                    <td>{{ vote.ticket }}</td>
                   </tr>
                   {% endfor %}
                 </tbody>

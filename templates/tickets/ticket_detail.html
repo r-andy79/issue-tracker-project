@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% block title %}Details{% endblock title %}
 {% block page_header %}
 <div class="container header-container">
     <div class="row">
@@ -11,13 +12,15 @@
 <div class="container">
     <div class="row my-1">
         {% if ticket.ticket_type == "bug" %}
-        <div class="col border rounded shadow p-2">
+        <div class="col border rounded shadow p-3">
             <h3 class="mb-0">{{ ticket.title }}</h3>
             <hr>
-            <p class="small">Author: {{ ticket.ticket_author }} | Type: {{ ticket.get_ticket_type_display }} |
-                Status: {{ ticket.get_ticket_status_display }} | Date created: {{ ticket.created_date }}</p>
+        <div class="p-3 mb-3 border rounded">
+            <p class="small">Author: <strong>{{ ticket.ticket_author }}</strong> | Type: <strong>{{ ticket.get_ticket_type_display }}</strong> |
+                Status: <strong>{{ ticket.get_ticket_status_display }}</strong> | Date created: <strong>{{ ticket.created_date }}</strong></p>
             <p>Votes: {{ votes.count }}</p>
-            <p>{{ ticket.description }}</p>
+            <p>Description: {{ ticket.description }}</p>
+        </div>
             <div class="col d-flex justify-content-end p-0">
                 {% if request.user.is_author or request.user.is_superuser %}
                 <a href="{% url 'tickets_list' %}"><button class="btn btn-sm btn-warning">Main page</button></a>

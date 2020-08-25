@@ -35,7 +35,7 @@
     <script src="{% static 'script.js' %}"></script>
     {% endblock %}
 
-    <title>Issue Tracker {% block extra_title %}{% endblock %}{% block head_title %}{% endblock %}</title>
+    <title>Issue Tracker - {% block extra_title %}{% endblock %}{% block head_title %}{% endblock %}</title>
     
   </head>
   <body>
@@ -70,6 +70,12 @@
                     <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
                   </li> 
                   {% else %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'bugs_list' %}">Bugs</a>
+                  </li> 
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'features_list' %}">Features</a>
+                  </li>
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'account_signup' %}">Register</a>
                   </li> 

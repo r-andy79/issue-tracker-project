@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% load static %}
-{% block title %}Tickets{% endblock title %}
+{% block extra_title %}New ticket{% endblock extra_title %}
 {% block page_header %}
-<div class="container header-container">
+<!-- <div class="container header-container">
     <div class="row">
         <div class="col"></div>
     </div>
-</div>
+</div> -->
 {% endblock %}
 {% block content %}
     <div class="container">
-        <div class="row">
-            <div class="col border rounded shadow p-3">
+        <div class="row my-2">
+            <div class="col p-3">
                 <h2>New ticket</h2>
                 <form method="POST">
                     {% csrf_token %}
