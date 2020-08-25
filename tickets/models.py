@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from .managers import BugTicketManager, FeatureTicketManager
 
 class Ticket(models.Model):
     title = models.CharField('Ticket title', max_length=120)
@@ -21,6 +22,16 @@ class Ticket(models.Model):
 
     def __str__(self):
         return self.title
+
+class FeatureTicket(Ticket):
+    objects=FeatureTicketManager()
+    class Meta:
+        proxy=True
+
+class BugTicket(Ticket):
+    objects=BugTicketManager()
+    class Meta:
+        proxy=True
 
 class Comment(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name='comments')

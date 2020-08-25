@@ -43,7 +43,7 @@ for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
 {% endif %}
 <div class="container">
 <div class="row">
-    <div class="col m-1 rounded p-3">
+    <div class="col m-1 p-3">
         <form class="login" method="POST" action="{% url 'account_login' %}">
             {% csrf_token %}
             {{ form|crispy }}

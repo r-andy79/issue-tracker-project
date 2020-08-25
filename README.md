@@ -21,7 +21,7 @@ As a logged in user:
 * I want to be able to vote on a bug type ticket
 * I want to be able to make a payment for a feature type ticket
 * I want to be able to add a comment to a ticket
-* I want to be able to view my profile...
+* I want to be able to view my profile
 * I want to be able to sort the tickets based on different criterias
 
 ### Administrator / Developer
