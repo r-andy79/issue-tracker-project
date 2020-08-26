@@ -11,6 +11,13 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from django.core.exceptions import ImproperlyConfigured
+
+def required(x):
+    if not x:
+        raise ImproperlyConfigured()
+    else:
+        return x
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,6 +31,7 @@ SECRET_KEY = os.environ.get('TRACKER_SECRET_KEY', '0d-ylxds1rx0r*enkl_e+r1ycu_3#
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('TRACKER_DEBUG', 'T') == 'T'
+MAIL_DEBUG = os.environ.get('TRACKER_MAIL_DEBUG', 'T') == 'T'
 
 ALLOWED_HOSTS = ['*']
 
@@ -172,7 +180,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STRIPE_PUBLISHABLE_KEY = 'pk_test_ykHKKk7JmbysFSB192veebsA00rCY6IypV'
 STRIPE_SECRET_KEY = os.environ.get('TRACKER_STRIPE_API_KEY')
 
-if 'DEVELOPMENT' in os.environ:
+if MAIL_DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     DEFAULT_FROM_EMAIL = 'admin@test.com'
 else:
@@ -180,6 +188,6 @@ else:
     EMAIL_USE_TLS = True
     EMAIL_PORT = 587
     EMAIL_HOST = 'smtp.gmail.com'
-    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-    DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
+    EMAIL_HOST_USER = required(os.environ.get('TRACKER_EMAIL_HOST_USER'))
+    EMAIL_HOST_PASSWORD = required(os.environ.get('TRACKER_EMAIL_HOST_PASSWORD'))
+    DEFAULT_FROM_EMAIL = required(os.environ.get('TRACKER_EMAIL_HOST_USER'))
