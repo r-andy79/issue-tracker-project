@@ -174,7 +174,7 @@ STRIPE_SECRET_KEY = os.environ.get('TRACKER_STRIPE_API_KEY')
 
 if 'DEVELOPMENT' in os.environ:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-        DEFAULT_FROM_EMAIL = 'admin@test.com'
+    DEFAULT_FROM_EMAIL = 'admin@test.com'
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_USE_TLS = True
