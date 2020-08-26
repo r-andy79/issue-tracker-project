@@ -13,4 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
     btn.addEventListener('mouseout', function() {
         this.innerHTML = '<i class="fas fa-plus"></i>'
     })
+
+    if(window.location.href.includes('/accounts/login/')) {
+        btn.style.display = "none";
+    }
 })
