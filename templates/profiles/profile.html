@@ -2,19 +2,14 @@
 {% load static %}
 {% block extra_title %}User's profile{% endblock extra_title %}
 {% block page_header %}
-<div class="container header-container">
-    <div class="row">
-        <div class="col"></div>
-    </div>
-</div>
 {% endblock %}
 {% block content %}
-<div class="container">
+<div class="container pt-3">
     <div class="row">
-        <div class="col border rounded shadow p-3">
+        <div class="col border rounded shadow mx-1 p-3">
             <h4>User's details</h4>
-            <p>User name: {{ user.username }}</p>
-            <p>email address: {{ user.email }}</p>
+            <p>User name: <strong>{{ user.username }}</strong></p>
+            <p>email address: <strong>{{ user.email }}</strong></p>
             <hr>
             <p>Below you can check the statuses of your tickets</p>
             <table class="table">
