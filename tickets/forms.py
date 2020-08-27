@@ -20,7 +20,7 @@ class PaymentForm(forms.ModelForm):
         fields = ('payment_value', )
 
 class SearchBugForm(forms.Form):
-    text = forms.CharField(max_length=100, required=False)
+    search_phrase = forms.CharField(max_length=100, required=False)
     ticket_status = forms.MultipleChoiceField(
         choices=Ticket.TICKET_STATUSES, 
         widget=forms.CheckboxSelectMultiple(),
@@ -33,7 +33,7 @@ class SearchBugForm(forms.Form):
     )
     
     date_sort = forms.ChoiceField(
-        label="Sort by creation date",
+        label="Sort by ticket creation date",
         choices=DATE_SORT_CHOICES, 
         required=False
     )
@@ -45,7 +45,7 @@ class SearchBugForm(forms.Form):
     )
     
     vote_sort = forms.ChoiceField(
-        label="Sort by vote count",
+        label="Sort by votes total",
         choices=VOTE_SORT_CHOICES,
         required=False
     )
@@ -66,7 +66,7 @@ class SearchBugForm(forms.Form):
         return 'vote_descending'
 
 class SearchFeatureForm(forms.Form):
-    text = forms.CharField(max_length=100, required=False)
+    search_phrase = forms.CharField(max_length=100, required=False)
     ticket_status = forms.MultipleChoiceField(
         choices=Ticket.TICKET_STATUSES, 
         widget=forms.CheckboxSelectMultiple(),
@@ -79,7 +79,7 @@ class SearchFeatureForm(forms.Form):
     )
     
     date_sort = forms.ChoiceField(
-        label="Sort by creation date",
+        label="Sort by ticket creation date",
         choices=DATE_SORT_CHOICES, 
         required=False
     )
@@ -91,7 +91,7 @@ class SearchFeatureForm(forms.Form):
     )
     
     payment_sum_sort = forms.ChoiceField(
-        label="Sort by contributed payments value",
+        label="Sort by total payments amount",
         choices=PAYMENT_SUM_SORT_CHOICES,
         required=False
     )
