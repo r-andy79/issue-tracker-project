@@ -77,18 +77,28 @@ card.on('change', function(event) {
 var form = document.getElementById('payment-form');
 form.addEventListener('submit', function(event) {
   event.preventDefault(); // JavaScript przejmuje kontrolę nad obsługą danych
-
+  const submitBtn = $('.submit-payment');
+  lockSubmit(submitBtn);
   stripe.createToken(card).then(function(result) {
     if (result.error) {
       // Inform the user if there was an error.
       var errorElement = document.getElementById('card-errors');
       errorElement.textContent = result.error.message;
+      unlockSubmit(submitBtn);
     } else {
       // Send the token to your server.
-      stripeTokenHandler(result.token); // ?
+      stripeTokenHandler(result.token);
     }
   });
 });
+
+function lockSubmit(btn$) {
+    btn$.prop('disabled', true);
+}
+
+function unlockSubmit(btn$) {
+    btn$.prop('disabled', false);
+}
 
 // Submit the form with the token ID.
 function stripeTokenHandler(token) {
@@ -102,6 +112,7 @@ function stripeTokenHandler(token) {
 
   // Submit the form
   form.submit();
+  
 }
 })
 
@@ -142,7 +153,7 @@ function stripeTokenHandler(token) {
                 </div>
                 {{ form|crispy }}
               
-                <button class="btn btn-sm btn-success">Submit Payment</button>
+                <button type="submit" class="btn btn-sm btn-success submit-payment">Submit Payment</button>
               </form>
         </div>
     </div>
