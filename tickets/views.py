@@ -53,7 +53,7 @@ def _bugs_list_invalid(request, form):
 def _bugs_list_valid(request, form):
     bugs = list(qs.make_bugs_query(
         ticket_type='bug',
-        text=form.cleaned_data['text'],
+        text=form.cleaned_data['search_phrase'],
         sorting_order=form.get_sorting_order(),
         statuses=form.cleaned_data['ticket_status']
     ))
@@ -99,7 +99,7 @@ def _features_list_invalid(request, form):
 def _features_list_valid(request, form):
     features = list(qs.make_features_query(
         ticket_type='feature',
-        text=form.cleaned_data['text'],
+        text=form.cleaned_data['search_phrase'],
         sorting_order=form.get_sorting_order(),
         statuses=form.cleaned_data['ticket_status']
     ))
