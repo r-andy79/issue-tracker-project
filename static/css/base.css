@@ -4,7 +4,7 @@ html {
 
 body {
     height: calc(100vh - 164px);
-    color: #555;
+    color: #444;
     font-family: 'Montserrat';
     font-size: 0.875rem;
     font-weight: 500;
@@ -16,6 +16,7 @@ body {
 .nav-wrapper {
     background: #0af;
 }
+
 .navbar {
     padding: 0.5rem 0;
     color: #fff;
@@ -55,7 +56,7 @@ body {
 
 /* Helper classes ---------------*/
 
-.navbar-dark.navbar-nav.nav-link {
+.navbar-dark .navbar-nav .nav-link {
     color: rgba(255,255,255,.9);
 }
 
