@@ -36,7 +36,10 @@ class BugTicket(Ticket):
 class Comment(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name='comments')
     comment_author = models.ForeignKey('auth.User', on_delete=models.PROTECT)
+    created_date = models.DateTimeField('Date created', default=timezone.now)
     comment_text = models.TextField()
+    class Meta:
+        ordering=['-created_date']
 
     def __str__(self):
         return self.comment_text
