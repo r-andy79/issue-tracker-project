@@ -59,7 +59,7 @@
             {% else %}
             <p>Payments sum: €{{ payments_sum.payment_value__sum|floatformat:2 }}</p>
             {% endif %}
-            <p>{{ ticket.description }}</p>
+            <p class="ticket-description">{{ ticket.description }}</p>
 
             <div class="col d-flex justify-content-end p-0">
                 {% if request.user.is_author or request.user.is_superuser %}

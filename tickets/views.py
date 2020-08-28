@@ -158,6 +158,9 @@ def ticket_new(request):
 @login_required(login_url='account_login')
 def edit_ticket(request, pk):
     ticket = get_object_or_404(Ticket, pk=pk)
+    if not (request.user.id == ticket.ticket_author_id or request.user.is_superuser):
+        return HttpResponseForbidden()
+        
     if request.method == "POST":
         form = TicketForm(request.POST, instance=ticket)
         if form.is_valid():
@@ -169,12 +172,6 @@ def edit_ticket(request, pk):
         'form': form
     }
     return render(request, "tickets/edit_ticket.html", context)
-
-@login_required(login_url='account_login')
-def delete_ticket(request, pk):
-    ticket = get_object_or_404(Ticket, pk=pk)
-    ticket.delete()
-    return redirect('tickets_list')
 
 @login_required(login_url='account_login')
 def add_comment_to_ticket(request, pk):

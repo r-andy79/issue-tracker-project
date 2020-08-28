@@ -135,7 +135,7 @@ function stripeTokenHandler(token) {
             <h3>Ticket details:</h3>
             <p>title: <strong>{{ ticket.title }}</strong></p>
             <p>date: <strong>{{ ticket.created_date }}</strong></p>
-            <p>description: <strong>{{ ticket.description|truncatewords:5 }}</strong></p>
+            <p class="ticket-description">description: <strong>{{ ticket.description|truncatewords:5 }}</strong></p>
         </div>
         <div class="col-md-6 p-3">
             <form class="p-1" action="{% url 'pay' ticket.id %}" method="post" id="payment-form">
