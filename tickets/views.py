@@ -204,8 +204,6 @@ def ticket_vote(request, ticket_id, user_id):
         messages.success(request, 'Your vote has been added')
     except IntegrityError as e:
         messages.warning(request, 'You can\'t vote twice')
-    except:
-        messages.warning(request, 'Something went wrong')
     return redirect('ticket_detail', pk=ticket.pk)
 
 def pay(request, pk):

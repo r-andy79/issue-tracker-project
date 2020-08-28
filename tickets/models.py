@@ -5,7 +5,7 @@ from .managers import BugTicketManager, FeatureTicketManager
 class Ticket(models.Model):
     title = models.CharField('Ticket title', max_length=120)
     ticket_author = models.ForeignKey('auth.User', on_delete=models.PROTECT)
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True, max_length=2000)
     TICKET_TYPES = [
         ('bug', 'Bug'),
         ('feature', 'Feature')
@@ -37,7 +37,7 @@ class Comment(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name='comments')
     comment_author = models.ForeignKey('auth.User', on_delete=models.PROTECT)
     created_date = models.DateTimeField('Date created', default=timezone.now)
-    comment_text = models.TextField()
+    comment_text = models.TextField(max_length=2000)
     class Meta:
         ordering=['-created_date']
 
