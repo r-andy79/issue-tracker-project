@@ -23,6 +23,11 @@ class Ticket(models.Model):
     def __str__(self):
         return self.title
 
+    def is_payment_allowed(self):
+        if self.ticket_status in ['T', 'D']:
+            return True
+        return False
+
 class FeatureTicket(Ticket):
     objects=FeatureTicketManager()
     class Meta:
