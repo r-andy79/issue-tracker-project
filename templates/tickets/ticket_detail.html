@@ -19,7 +19,7 @@
             <p class="small">Author: <strong>{{ ticket.ticket_author }}</strong> | Type: <strong>{{ ticket.get_ticket_type_display }}</strong> |
                 Status: <strong>{{ ticket.get_ticket_status_display }}</strong> | Date created: <strong>{{ ticket.created_date }}</strong></p>
             <p>Votes: {{ votes.count }}</p>
-            <p>Description: {{ ticket.description }}</p>
+            <p class="ticket-description">Description: {{ ticket.description }}</p>
         </div>
             <div class="col d-flex justify-content-end p-0">
                 {% if request.user.is_author or request.user.is_superuser %}

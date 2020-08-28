@@ -163,7 +163,8 @@ def edit_ticket(request, pk):
         if form.is_valid():
             form.save()
             return redirect('ticket_detail', pk)
-    form = TicketForm(instance=ticket)
+    else:
+        form = TicketForm(instance=ticket)
     context = {
         'form': form
     }
