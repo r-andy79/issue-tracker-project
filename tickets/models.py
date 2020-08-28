@@ -66,6 +66,9 @@ class Payment(models.Model):
         (10, '10')
     ]
     payment_value = models.IntegerField(choices=PAYMENT_VALUES)
+    charge_id = models.CharField(max_length=50)
+    class Meta:
+        ordering=['-date']
 
     def __str__(self):
         return str(self.user) + ":" + str(self.ticket) + " " + str(self.date) + " " + str(self.payment_value)

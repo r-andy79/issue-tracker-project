@@ -47,4 +47,10 @@ class TicketFeatureAdmin(TicketAdmin):
 class CommentAdmin(admin.ModelAdmin):
     list_display=['id', 'ticket', 'comment_author', 'created_date']
 
-admin.site.register(Payment)
+@admin.register(Payment)
+class PaymentAdmin(admin.ModelAdmin):
+    list_display=['charge_id', 'ticket', 'user', 'date', 'payment_value']
+    fields=['charge_id']
+
+    def has_delete_permission(self, request, obj=None): 
+        return False

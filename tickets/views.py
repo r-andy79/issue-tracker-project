@@ -226,6 +226,7 @@ def pay(request, pk):
                 currency  = 'eur',
                 description = 'Donation',
             )
+            form.instance.charge_id = charge.id
             form.save()
             amount = form.instance.payment_value
             messages.success(request, f'Thank you for your payment of %a euro' %amount)
