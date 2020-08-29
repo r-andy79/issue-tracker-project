@@ -76,7 +76,7 @@ card.on('change', function(event) {
 // Handle form submission.
 var form = document.getElementById('payment-form');
 form.addEventListener('submit', function(event) {
-  event.preventDefault(); // JavaScript przejmuje kontrolę nad obsługą danych
+  event.preventDefault();
   const submitBtn = $('.submit-payment');
   lockSubmit(submitBtn);
   stripe.createToken(card).then(function(result) {
