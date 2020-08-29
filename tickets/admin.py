@@ -12,13 +12,12 @@ class TicketAdmin(admin.ModelAdmin):
             try:
                 send_mail(
                     f'{obj.title} - change of status',
-                    f'Please be advised that the status of your ticket has changed to {obj.get_ticket_status_display()}',
+                    f'Dear {obj.ticket_author.username}, please be advised that the status of your ticket has changed to {obj.get_ticket_status_display()}',
                     settings.DEFAULT_FROM_EMAIL,
                     [obj.ticket_author.email],
                     fail_silently=False,
                 )
             except SMTPException:
-                # TODO zmień print na logging
                 print('There is something wrong with the email')
             super().save_model(request, obj, form, change)
 
