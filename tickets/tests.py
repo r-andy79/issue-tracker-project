@@ -10,6 +10,20 @@ class IndexTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
+class BugsTest(TestCase):
+    def test_status_200(self):
+        url = reverse('bugs_list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+
+class FeaturesTest(TestCase):
+    def test_status_200(self):
+        url = reverse('features_list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+
 def create_new_user_data(**kwargs):
     default_data = {
         'email': "joe@test.com",
