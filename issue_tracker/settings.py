@@ -32,6 +32,7 @@ SECRET_KEY = os.environ.get('TRACKER_SECRET_KEY', '0d-ylxds1rx0r*enkl_e+r1ycu_3#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('TRACKER_DEBUG', 'T') == 'T'
 MAIL_DEBUG = os.environ.get('TRACKER_MAIL_DEBUG', 'T') == 'T'
+USE_SQLITE3 = os.environ.get('TRACKER_USE_SQLITE3', 'T') == 'T'
 
 ALLOWED_HOSTS = ['*']
 
@@ -119,20 +120,24 @@ WSGI_APPLICATION = 'issue_tracker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
+if USE_SQLITE3:
+    DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'ENGINE': 'django.db.backends.postgresql',
-        # get działa jak if: jeśli mamy zmienną TRACKER_DB_NAME to właśnie ona zostanie użyta
-        # w przeciwnym razie zostanie użyta wartość 'tracker'
-        'NAME': os.environ.get('TRACKER_DB_NAME', 'tracker'),
-        'USER': os.environ.get('TRACKER_DB_USER', 'tracker'),
-        'PASSWORD': os.environ.get('TRACKER_DB_PASSWORD', 'tracker'),
-        'HOST': os.environ.get('TRACKER_DB_HOST', '127.0.0.1'),
-        'PORT': os.environ.get('TRACKER_DB_PORT', '5432'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('TRACKER_DB_NAME', 'tracker'),
+            'USER': os.environ.get('TRACKER_DB_USER', 'tracker'),
+            'PASSWORD': os.environ.get('TRACKER_DB_PASSWORD', 'tracker'),
+            'HOST': os.environ.get('TRACKER_DB_HOST', '127.0.0.1'),
+            'PORT': os.environ.get('TRACKER_DB_PORT', '5432'),
+        }
+    }
 
 
 # Password validation
