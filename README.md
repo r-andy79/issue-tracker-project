@@ -30,18 +30,29 @@ As a logged in user:
 * I want to get updates by email whenever there has been a status change made on any of my tickets,
 
 ### Administrator / Developer
-As an administrator / developr:
+As an administrator / developer:
 * I want to be able to perform all the operations that user can do,
 * I want to be able to update the ticket status, to give user a feedback on a progress
 
 ## Features
 Application allows users to create two type of tickets: bugs and features. Bugs should be used to report any issues related to the application and features should be raised whenever a user comes up with a new functionality idea that could be implemented. Users can upvote bugs, if they have the same issue to prioritise fixing it. Features will be developed based on the total amount contributed towards a specific feature.
+
 The application has following functionalities:
 
 Available to everyone:
 
 - [x] browsing tickets
+
+Tickets can be browsed by clicking 'Bugs' or 'Features' link from the menu, which open list views. All tickets are available in these views. By default all tickets are sorted by created date in descending order.
+
 - [x] filtering and sorting tickets
+
+Filtering and sorting can be done through the forms that are available in 'Bugs' and 'Features' lists. Tickets can be sorted by creation date and votes total (bugs) or payments total (features).
+
+- [x] searching tickets
+
+Search functionality is also done through the forms available in 'Bugs and 'Features'. Tickets can be looked up be the word from either ticket's title or its description.
+
 - [x] viewing details of a specific ticket
 
 Available to registered users:
@@ -50,16 +61,40 @@ Available to registered users:
 
 To create a new ticket, user needs to click 'New Ticket' option from the menu and fulfill the form specifying ticket's subject, type (bug or feature) and providing a description of an issue or a new functionality suggestion,
 
+- [x] edit a ticket
+
+Tickets can be edited by author and administrator. This can be done by clicking 'Edit' button in ticket detailed view.
+
 - [x] comment a ticket
+
+To add a comment, user needs to click 'Comment' button in ticket detailed view.
+
 - [x] vote bug ticket
+
+To vote for a bug, user needs to click 'Vote' button in ticket detailed view.
+
 - [x] make payment for feature ticket
-- [x] view a profile
+
+To make a payment, user needs to click 'Pay' button in a specific feature ticket view, which opens payment template, where user can enter credit card details (please use test card number: 4242 4242 4242 4242 and do NOT enter your valid card details), select an amount that he/she wishes to contribute and submit the payment. Once the button has been clicked, it gets disabled to prevent from clicking it more than once. Also, payment will not be accepted if ticket status had been changed to 'Completed'.
+
+- [x] view user's profile
+
+User can view his/her profile page by clicking 'User profile' link from the menu. 
+
 - [x] receive a notification email, once the ticket status has changed
+
+Ticket author will receive an email informing of the ticket status change, so he/she will stay up-to-date with the work progress on their tickets.
 
 Available to administrator/developer:
 - [x] changing tickets' statuses
 
-Tickets can be administered by a user with admin privileges and the panel can be accessed from the menu by clicking 'Tickets Management' from the menu (this option will not appear for guest or logged in users that do not have superuser rights). Once the admin panel is open the tickets can be accessed by clicking 'Bug Tickets' or 'Feature Tickets' links. The tickets are sorted by votes (bugs) or payments total (features). This is to help developer to determine which bug / feature should be worked on as first.
+This functionality can be accessed by clicking 'Tickets management' link from the menu and 'Bug Tickets' or 'Feature tickets' subsequently. The tickets are sorted by votes total (bugs) and payments total (features). Beside this Administrator can see who is the author of the ticket, what is the ticket's current status and when it was created. Tickets can also be filtered based on their status.Administrator is able to change statuses of the tickets that are being currently worked on. 
+
+Tickets can be administered by a user with admin privileges and the panel can be accessed from the menu by clicking 'Tickets Management' from the menu (this option will not appear for guest or logged in users that do not have superuser rights). Once the admin panel is open, the tickets can be accessed by clicking 'Bug Tickets' or 'Feature Tickets' links. The tickets are sorted by votes (bugs) or payments total (features). There is also a filter available, that allows to filter the tickets based on their status. This is to help developer to determine which bug / feature should be worked on as first.
+
+Functionalities left to implement:
+
+- [ ] - pagination
 
 ## Technologies Used
 - [Python](https://www.python.org/) - used for general-purpose programming and writing the logic of the application,
@@ -75,8 +110,35 @@ Tickets can be administered by a user with admin privileges and the panel can be
 ## Testing
 
 ## Installation
-To run the appliaction on your local machine please please create a virtual environment using command python3 -m venv /path/to/new/virtual/environment. Once created you can clone the repo: git clone https://github.com/r-andy79/issue-tracker-project.git. 
-Run pip3 install -r requirements.txt 
-apply the migrations
+
+To run the appliaction on your local machine please follow the instructions below:
+
+1. Clone the repository to your local drive by `git clone https://github.com/r-andy79/issue-tracker-project.git`
+2. Create a virtual environment within the project folder (to create a virtual environment please follow the instructions specific to your operating system)
+3. Run virtual environment
+4. Install project dependencies using `pip install -r requirements.txt` command
+5. Apply the migrations using `python manage.py migrate` command
+6. Create a superuser using `python manage.py createsuperuser` command and provide the details as required
+7. Run the project locally by typing `python manage.py runserver`
+
 ## Deployment
+
+Application has been deployed to Heroku platform and is available under this [link](https://github.com/r-andy79/issue-tracker-project). In order to deploy the application to Heroku, the following steps were followed:
+
+1. Installation of psycopg2
+2. Installation of gunicorn
+3. Installation of whitenoise
+4. Export of all requirements to requirements.txt file
+5. Creating setup.sh file that run database migration
+6. Creating a Procfile
+7. Creating an application in Heroku
+8. Linking PostgreSQL database to Heroku application
+9. Setting environment variables in Heroku
+10. Creating Heroku remote ...
+11. Pushing the application to Heroku
+12. Creating a superuser on Heroku server
+
+There are no differences between deployed and development version of the application.
+
+
 ## Acknowledgements
