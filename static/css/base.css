@@ -54,16 +54,21 @@ body {
     transition: 0.3s;
 }
 
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255,255,255,.9);
+}
+
+.logo-font {
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
 .new-ticket:hover {
     background: #0af;
     color: #fff;
 }
 
 /* Helper classes ---------------*/
-
-.navbar-dark .navbar-nav .nav-link {
-    color: rgba(255,255,255,.9);
-}
 
 .message-text {
     padding: 10px;
@@ -90,32 +95,6 @@ body {
     display: none;
 }
 
-/* from Bulma */
-.icon {
-    align-items: center;
-    display: inline-flex;
-    justify-content: center;
-    height: 1.5rem;
-    width: 1.5rem;
-}
-
-.logo-font {
-    text-transform: uppercase;
-    font-weight: 500;
-}
-
-.main-logo-link {
-    width: fit-content;
-}
-
-.text-black {
-    color: #000 !important;
-}
-
-.border-black {
-    border: 1px solid black !important;
-}
-
 /* ---------------------------- Media Queries */
 
 @media (min-width: 1200px) {
@@ -124,23 +103,4 @@ body {
     }
 }
 
-/* fixed top navbar only on medium and up */
-@media (min-width: 992px) {
-    .fixed-top-desktop-only {
-        position: fixed;
-        top: 0;
-        right: 0;
-        left: 0;
-        z-index: 1030;
-    }
-    .header-container {
-        padding-top: 164px;
-    }
-}
-
-@media (min-width: 400px) {
-    .header-container {
-        padding-top: 128px;
-    }  
-}
 
