@@ -24,7 +24,7 @@
                 <p class="text-center">no tickets</p>
             </div>
             {% endfor %}
-            {% if bugs_list_short.count > 5 %}
+            {% if bugs_list_short.count == 5 %}
             <a class="d-block mb-3 text-right" href="{% url 'bugs_list' %}">View more</a>
             {% endif %}
         </div>
@@ -48,7 +48,7 @@
                 <p class="text-center">no tickets</p>
             </div>
             {% endfor %}
-            {% if features_list_short.count > 5 %}
+            {% if features_list_short.count == 5 %}
             <a class="d-block mb-3 mr-1 text-right" href="{% url 'features_list' %}">View more</a>
             {% endif %}
         </div>
