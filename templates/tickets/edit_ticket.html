@@ -2,22 +2,15 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block extra_title %}Edit ticket{% endblock extra_title %}
-{% block page_header %}
-<div class="container header-container">
-    <div class="row">
-        <div class="col"></div>
-    </div>
-</div>
-{% endblock %}
 {% block content %}
     <div class="container">
-        <div class="row">
-            <div class="col border rounded shadow p-3">
+        <div class="row my-2">
+            <div class="col p-3">
                 <form method="POST">
                     {% csrf_token %}
                     {{ form|crispy }}
                     <div class="col d-flex justify-content-center p-0">
-                        <button class="btn btn-success justify-content-end" type="submit">Update</button>
+                        <button class="btn btn-success justify-content-end" type="submit">Update ticket</button>
                     </div>
                 </form>
             </div>
