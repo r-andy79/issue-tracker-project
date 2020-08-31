@@ -1,6 +1,12 @@
 # Issue Tracker Application
 ## 4th Milestone Project - Full Stack Frameworks with Django - Code Institute
 
+### Important notes
+
+**In order for Stripe payments to work on your local machine you need to register at stripe.com and obtain API test secret key and set it as TRACKER_STRIPE_API_KEY in your system environment variables**
+
+**Please do NOT enter your valid card details**
+
 ### Table of contents
 - [Overview](#overview)
 - [UX](#ux)
@@ -152,7 +158,7 @@ Aplication functions have been tested to ensure they work correctly:
 - receive a notification email, once the ticket status has changed - Ticket author will receive an email informing of the ticket status change, once the status has been updated by administrator, so he/she will stay up-to-date with the work progress on their tickets.
 
 Available to administrator/developer:
-- changing tickets' statuses - This functionality can be accessed by clicking 'Tickets management' link from the menu and 'Bug Tickets' or 'Feature tickets' subsequently. The tickets are sorted by votes total (bugs) and payments total (features). Beside this Administrator can see who is the author of the ticket, what is the ticket's current status and when it was created. Tickets can also be filtered based on their status.Administrator is able to change statuses of the tickets that are being currently worked on. 
+- changing tickets' statuses - This functionality can be accessed by clicking 'Tickets management' link from the menu and 'Bug Tickets' or 'Feature tickets' subsequently. The tickets are sorted by votes total (bugs) and payments total (features). Beside this Administrator can see who is the author of the ticket, what is the ticket's current status and when it was created. Tickets can also be filtered based on their status.Administrator is able to change statuses of the tickets that are being currently worked on. To test this functionality please use the following credentials, login: admin_demo, password: Torun123!
 
 Tickets can be administered by a user with admin privileges and the panel can be accessed from the menu by clicking 'Tickets Management' from the menu (this option will not appear for guest or logged in users that do not have superuser rights). Once the admin panel is open, the tickets can be accessed by clicking 'Bug Tickets' or 'Feature Tickets' links. The tickets are sorted by votes (bugs) or payments total (features). There is also a filter available, that allows to filter the tickets based on their status. This is to help developer to determine which bug / feature should be worked on as first.
 
