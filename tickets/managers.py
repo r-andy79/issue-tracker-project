@@ -1,7 +1,12 @@
 from django.db import models
 from django.db.models import Sum, Count
 
+
 class BugTicketManager(models.Manager):
+    """Works with tickets marked as bugs.
+
+    Returns queries and binded `total_votes` field.
+    """
     def get_queryset(self):
         return super().get_queryset().filter(ticket_type="bug")
 
@@ -10,14 +15,19 @@ class BugTicketManager(models.Manager):
             self.get_queryset()
             .annotate(total_votes=Count("vote"))
         )
-    
+
     def get_queryset_for_admin(self):
         return self._annotate_total_votes().order_by('-total_votes')
 
     def get_queryset_for_user(self):
         return self._annotate_total_votes().order_by('-created_date')[:5]
 
+
 class FeatureTicketManager(models.Manager):
+    """Works with tickets marked as features.
+
+    Returns queries and binded `payments_sum` field.
+    """
     def get_queryset(self):
         return super().get_queryset().filter(ticket_type="feature")
 
@@ -26,7 +36,7 @@ class FeatureTicketManager(models.Manager):
             self.get_queryset()
             .annotate(payments_sum=Sum("payment__payment_value"))
         )
-    
+
     def get_queryset_for_admin(self):
         return self._annotate_payments_sum().order_by('-payments_sum')
 

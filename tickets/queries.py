@@ -3,7 +3,9 @@ from django.db import IntegrityError
 from django.utils import timezone
 from .models import Ticket, Comment, Vote, Payment
 
+
 def make_features_query(ticket_type, text=None, sorting_order=None, statuses=None):
+    """returns features and binds payments total `payments_sum` to each feature"""
     features_query = (
         Ticket.objects
         .filter(ticket_type=ticket_type)
@@ -15,10 +17,10 @@ def make_features_query(ticket_type, text=None, sorting_order=None, statuses=Non
 
     if sorting_order:
         features_query = _tickets_order_by(features_query, sorting_order=sorting_order)
-    
+
     if statuses:
         features_query = _ticket_filter_by_statuses(features_query, statuses)
-    
+
     return features_query
 
 
@@ -27,11 +29,11 @@ def _ticket_filter_by_statuses(query, statuses):
     for status in statuses:
         q_objects |= Q(ticket_status__contains=status)
     return query.filter(q_objects)
-  
+
 
 def _tickets_order_by(query, sorting_order):
-    order_map = { 
-        'date_descending': '-created_date', 
+    order_map = {
+        'date_descending': '-created_date',
         'date_ascending': 'created_date',
         'vote_descending': '-total_votes',
         'vote_ascending': 'total_votes',
@@ -42,6 +44,7 @@ def _tickets_order_by(query, sorting_order):
 
 
 def make_bugs_query(ticket_type, text=None, sorting_order=None, statuses=None):
+    """returns features and binds votes total `total_votes` to each feature"""
     bugs_query = (
         Ticket.objects
         .filter(ticket_type=ticket_type)
@@ -53,8 +56,8 @@ def make_bugs_query(ticket_type, text=None, sorting_order=None, statuses=None):
 
     if sorting_order:
         bugs_query = _tickets_order_by(bugs_query, sorting_order=sorting_order)
-    
+
     if statuses:
         bugs_query = _ticket_filter_by_statuses(bugs_query, statuses)
-    
+
     return bugs_query

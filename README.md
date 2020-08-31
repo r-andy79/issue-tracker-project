@@ -89,7 +89,10 @@ Available to registered users:
 - [x] receive a notification email, once the ticket status has changed
 
 Available to administrator/developer:
+
 - [x] changing tickets' statuses
+
+
 
 Functionalities left to implement:
 
@@ -98,7 +101,7 @@ Functionalities left to implement:
 ## Technologies Used
 - [Python](https://www.python.org/) - used for general-purpose programming and writing the logic of the application,
 - [Django 3.0](https://www.djangoproject.com/) - used for serving templates, performing CRUD operations and administrative functions,
-- [Allauth library] - used for signup and login functions, forgotten password and email verification flows,
+- [Allauth library](https://django-allauth.readthedocs.io/en/latest/overview.html) - used for signup and login functions, forgotten password and email verification flows,
 - [PostgreSQL](https://www.postgresql.org/) - used for storing the application data,
 - [Jinja templating language](https://jinja.palletsprojects.com/en/2.10.x/) - used for incorporating Python code into HTML templates,
 - [HTML](https://html.spec.whatwg.org/) - used for building the structure of the interface,
