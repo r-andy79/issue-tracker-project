@@ -108,7 +108,7 @@ Functionalities left to implement:
 - [CSS](https://docs.ckan.org/en/ckan-2.7.3/contributing/css.html) - used for custom styling of some elements,
 - [JavaScript / jQuery](https://jquery.com/) - used for triggering certain functions that set timeout on Django messages or disable buttons, preventing them from being double clicked,
 - [Bootstrap](https://getbootstrap.com/) - used for building the visual side of the application,
-- [Stripe API](https://stripe.com/en-ie) - used for processing card payments from the application (please use test card number: 4242 4242 4242 4242). Please do NOT enter your valid card details.
+- [Stripe API](https://stripe.com/en-ie) - used for processing card payments from the application (please use test card number: 4242 4242 4242 4242). **Please do NOT enter your valid card details**.
 
 ## Testing
 
@@ -169,6 +169,8 @@ To run the appliaction on your local machine please follow the instructions belo
 5. Apply the migrations using `python manage.py migrate` command
 6. Create a superuser using `python manage.py createsuperuser` command and provide the details as required
 7. Run the project locally by typing `python manage.py runserver`
+
+**In order for Stripe payments to work on your local machine you need to register at stripe.com and obtain API test secret key and set it as TRACKER_STRIPE_API_KEY in your system environment variables**
 
 ## Deployment
 
